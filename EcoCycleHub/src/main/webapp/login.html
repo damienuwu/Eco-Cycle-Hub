@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header class="page-header">
+            <div class="logo-container">
+                <img src="images/logo-company.png" alt="Company Logo" class="logo">
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="team.html" class="nav-link">Our Team</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+            </nav>
+
+            <div class="header-btns">
+                <a href="login.html" class="header-btn">Login</a>
+                <a href="registration.html" class="header-btn">Register</a>
+            </div>
+        </header>
+
+
+        <div class="login-container">
+            <aside>
+                <img src="images/login-image.png" alt="Login Image">
+            </aside>
+
+            <div class="eco-container">
+                <div class="logo-container">
+                    <img src="images/logo-company.png" alt="Company Logo" class="logo">
+                </div>
+                <h2>Welcome Back</h2>
+                <p>Let's contribute to a sustainable future.</p>
+                <form action="login" method="post">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder=" " required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder=" " required>
+                        <label for="password">Password</label>
+                    </div>
+                    <button type="submit" class="eco-btn">Login</button>
+                </form>
+                <p>Don't have an account? <a href="registration.html">Register Here</a></p>
+            </div>
+        </div>
+    </body>
+</html>
