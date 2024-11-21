@@ -1,0 +1,236 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #dff0d8, #a9dfbf);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column; /* Align elements vertically */
+    align-items: center;
+    justify-content: flex-start; /* Ensure content is aligned from top */
+}
+
+.login-container {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: flex-start; /* Align the items to the left */
+    gap: 20px; /* Space between the image and the form */
+    margin-top: 20px; /* Reduced space from top */
+    max-width: 900px;
+    width: 100%;
+    height: 100vh; /* Ensure full height */
+}
+
+aside {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the image vertically */
+}
+
+aside img {
+    width: 100%; /* Adjust width as needed */
+    max-width: 300px; /* Max width for the image */
+    height: auto;
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.eco-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 8px;
+    padding: 20px 40px;
+    max-width: 350px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+    margin-left: 20px; /* Optional: Adjust to shift the form left */
+}
+
+.logo-container {
+    flex-shrink: 0; /* Prevent logo from shrinking */
+    margin-right: 20px; /* Space between logo and nav links */
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    position: absolute;
+    top: 40%;
+    left: 12px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    opacity: 50%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 14px 12px;
+    padding-top: 20px; /* Space for label */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 11px; /* Adjust this value to your preference */
+    background-color: #f8f8f8;
+    transition: 0.2s ease all;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #28b463;
+    outline: none;
+}
+
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+    top: -3.5px;
+    font-size: 12px;
+    color: #28b463;
+    opacity: 1; /* Ensures label stays visible when focused or filled */
+}
+
+.eco-btn {
+    background-color: #28b463; /* Button background color */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto 0; /* Center button horizontally */
+    display: block; /* Ensures the button behaves like a block element */
+    transition: background-color 0.3s ease;
+}
+
+.eco-btn:hover {
+    background-color: #239b56; /* Darker shade on hover */
+}
+
+.page-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: transparent;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Space out nav and buttons */
+    align-items: center; /* Center header items vertically */
+    z-index: 1000;
+}
+
+.header-btns {
+    display: flex;
+    gap: 10px; /* Space between login and register buttons */
+}
+
+.header-btn {
+    background-color: #28b463; /* Button background color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.header-btn:hover {
+    background-color: #239b56; /* Darker shade on hover */
+}
+
+.nav-links {
+    display: flex;
+    gap: 5%; /* Space between navigation links */
+    justify-content: center; /* Center links */
+    flex-grow: 1; /* Allow nav links to grow */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #28b463; /* Link color */
+    font-size: 18px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #239b56; /* Darker link color on hover */
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between; /* Space out welcome text and image */
+    padding: 120px 20px 20px; /* Adjust padding to avoid overlap with fixed header */
+    gap: 20px;
+}
+
+.welcome-text {
+    flex: 1;
+    text-align: left; /* Align welcome text to the left */
+    max-width: 600px; /* Limit width */
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    animation: fadeIn 1.5s ease-in-out; /* Fade-in animation */
+}
+
+.welcome-text h1 {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+    font-size: 60px;
+    color: #1c8e38; /* Darker green for bold effect */
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 2px; /* Increased spacing for more impact */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+}
+
+.welcome-text p {
+    font-size: 20px;
+    color: #333;
+    line-height: 1.6;
+    font-weight: 500;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px; /* Space from the text */
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    max-height: 700px; /* Limit image height */
+    object-fit: cover; /* Ensure image fits without distortion */
+}
