@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-container">
+            <img src="images/logo-company.png" alt="Company Logo" class="logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="team.html" class="nav-link">Our Team</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+        </nav>
+
+        <div class="header-btns">
+            <a href="login.html" class="header-btn">Login</a>
+            <a href="registration.html" class="header-btn">Register</a>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <aside>
+            <img src="images/login-image.png" alt="Register Image">
+        </aside>
+
+        <div class="eco-container">
+            <div class="logo-container">
+                <img src="images/logo-company.png" alt="Company Logo" class="logo">
+            </div>
+            <h2>Join the Eco Cycle</h2>
+            <p>Be a part of our green initiative!</p>
+            <form action="register" method="post">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" placeholder=" " required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder=" " required>
+                    <label for="confirm-password">Confirm Password</label>
+                </div>
+                <button type="submit" class="eco-btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="login.html">Login Here</a></p>
+        </div>
+    </div>
+</body>
+</html>
