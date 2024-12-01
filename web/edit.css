@@ -1,0 +1,116 @@
+@import "style.css";
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9; /* Slightly lighter background for better contrast */
+}
+
+.Container {
+    max-width: 700px; /* Increased width for better spacing */
+    padding: 28px;
+    margin: 0 28px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+h2 {
+    font-size: 22px;
+    text-align: center;
+    color: #333; /* Neutral dark color for heading */
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc; /* More visible border */
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Consistent spacing between elements */
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    width: 48%; /* Adjust width to fit two in a row */
+    gap: 10px; /* Space between label and input */
+}
+
+.input-box label {
+    color: #555;
+    font-size: 14px;
+}
+
+.input-box input,
+.input-box select {
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+    border-color: #94AB6F; /* Highlighted border color */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow on focus */
+}
+
+
+.button-add {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.button-add input {
+    color: #fff;
+    background-color: #94AB6F; /* Match with the border highlight */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-add input:hover {
+    background-color: #7d964e; /* Slightly darker on hover */
+}
+
+img {
+    display: block;
+    max-width: 100%; /* Make the image responsive */
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.input-box img {
+    max-width: 50%; /* Reduce image size */
+    margin-top: 10px;
+}
+
+/* Full width for wider elements like the current image or file upload */
+.input-box.full-width {
+    width: 100%;
+}
+
+/* Add some margin for overall layout */
+.content {
+    margin-bottom: 20px;
+}
