@@ -12,7 +12,7 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    width: 230px;
+    width: 300px;
     height: 100%;
     background: #76b87a;
     padding: 20px 0;
@@ -86,7 +86,7 @@ body {
 .main {
     position: relative;
     padding: 20px;
-    margin-left: 230px;
+    margin-left: 300px;
     background: #f9f9f9;
     height: 100vh;
     transition: margin-left 0.3s ease;
@@ -116,7 +116,78 @@ body {
     object-fit: cover;
 }
 
-/* Dashboard Cards */
+/* Dashboard content customer */
+.content {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f9f3eb;
+    padding: 20px;
+    border-radius: 8px;
+    height: 75vh;
+
+    /* Flexbox centering */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.item {
+    background: #f6f9f4;
+    border: 2px solid #b7d4b6;
+    border-radius: 8px;
+    width: 300px;
+    padding: 15px;
+    text-align: center;
+}
+
+.item p {
+    font-size: 14px;
+    color: #7b9678;
+    margin: 0;
+    font-weight: bold;
+}
+
+.item h2 {
+    margin: 10px 0;
+    color: #000;
+    font-size: 22px;
+}
+
+.top-item {
+    margin-bottom: 10px;
+}
+
+.bottom-row {
+    display: flex;
+    gap: 20px; 
+    
+}
+
+.recycle-btn {
+    background-color: #7ca77d;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.recycle-btn:hover {
+    background-color: #6a946b;
+}
+
+
+/* Dashboard Cards Admin */
 .cardBox {
     display: flex;
     justify-content: space-between;
