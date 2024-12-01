@@ -3,32 +3,32 @@ const itemsData = {
     "001": {
         name: "Cardboard",
         price: "5",
-        image: "images/cardboard.png"
+        image: "../images/cardboard.png"
     },
     "002": {
         name: "Newspaper",
         price: "5",
-        image: "images/newpaper.png"
+        image: "../images/newspaper.png"
     },
     "003": {
         name: "Plastic Bottle",
         price: "5",
-        image: "images/plasticBot.png"
+        image: "../images/plasticBot.png"
     },
     "004": {
         name: "Aluminium Can",
         price: "10",
-        image: "images/alCan.png"
+        image: "../images/alCan.png"
     },
     "005": {
         name: "Glass Bottle",
         price: "15",
-        image: "images/glass bottle.png"
+        image: "../images/glass bottle.png"
     },
     "006": {
         name: "Used Cooking Oil",
         price: "20",
-        image: "images/usedOil.png"
+        image: "../images/usedOil.png"
     }
 };
 
