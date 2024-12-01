@@ -272,6 +272,9 @@ header .header-right .hamburger div {
   .greenimg{
     width: 60%;
   }
+  .EcoXchange{
+    width: 100%;
+  }
   .button-gs{
     text-decoration: none;
     background-color: var(--primary-color);

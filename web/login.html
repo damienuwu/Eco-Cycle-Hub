@@ -4,23 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
-        <link rel="stylesheet" href="css/login-registration.css">
-        
-        <script>
-            function handleLogin(event) {
-                event.preventDefault(); // Prevent form submission
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                if (username === 'customer' && password === '123') {
-                    window.location.href = 'Customer/DashboardCustomer.html'; // Redirect to customer dashboard
-                } else if (username === 'admin' && password === '123') {
-                    window.location.href = 'Admin/DashboardAdmin.html'; // Redirect to admin dashboard
-                } else {
-                    alert('Invalid username or password. Please try again.');
-                }
-            }
-        </script>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <header class="page-header">
@@ -29,6 +13,8 @@
             </div>
             <nav class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
+                <a href="team.html" class="nav-link">Our Team</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
             </nav>
 
             <div class="header-btns">
@@ -49,7 +35,7 @@
                 </div>
                 <h2>Welcome Back</h2>
                 <p>Let's contribute to a sustainable future.</p>
-                <form onsubmit="handleLogin(event)">
+                <form action="login" method="post">
                     <div class="form-group">
                         <input type="text" id="username" name="username" placeholder=" " required>
                         <label for="username">Username</label>
