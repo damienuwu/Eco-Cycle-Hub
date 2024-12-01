@@ -1,0 +1,533 @@
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600");
+
+/* DESKTOP SIZE */
+/*===== VARIABLES CSS =====*/
+:root {
+  /*===== Colors =====*/
+  --background-color: #FBF6F1;
+  --primary-color: #94AB6F;
+  --dark-prim-color: #849B60;
+  --secondary-color: #136B40;
+  --white-color: #fff;
+  --dark-color: #353535;
+  --black-color: black;
+  --text-grey: grey;
+
+  /*===== Font and typography =====*/
+  --body-font: "Poppins", sans-serif, "Martel";
+  --biggest-font-size: 4.5rem;
+  --h1-font-size: 2.5rem;
+  --h2-font-size: 1.5rem;
+  --h3-font-size: 1.25rem;
+  --normal-font-size: 1rem;
+  --small-font-size: 0.875rem;
+  --smaller-font-size: 0.813rem;
+
+  /*===== Font weight =====*/
+  --font-medium: 400;
+  --font-semi-bold: 600;
+  --font-bold: 700;
+
+  /*===== Margins =====*/
+  --mb-1: 0.5rem;
+  --mb-2: 1rem;
+  --mb-3: 1.5rem;
+  --mb-4: 2rem;
+  --mb-5: 2.5rem;
+  --mb-6: 3rem;
+
+  /*===== z index =====*/
+  --z-normal: 1;
+  --z-tooltip: 10;
+  --z-fixed: 100;
+
+  /*===== screen size =====*/
+  --screen-size: 80vh;
+  --padding-size: 4rem 0 2rem;
+}
+
+/* TABLET SIZE */
+  @media screen and (max-width: 900px) {
+    :root {
+      --screen-size: 60vh;
+      --padding-size: 0rem;
+      --biggest-font-size: 2.5rem;
+      --h1-font-size: 1.5rem;
+      --h2-font-size: 1.25rem;
+      --h3-font-size: 1.125rem;
+      --normal-font-size: 0.938rem;
+      --small-font-size: 0.813rem;
+      --smaller-font-size: 0.75rem;
+    }
+  }
+
+/*===== BASE ===== */
+*,
+::before,
+::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*{
+    text-decoration: none;
+    list-style: none;
+}
+body {
+  margin: var(--header-height) 0 0 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-medium);
+  background-color: var(--background-color);
+  /* color: var(--dark-color); */
+  line-height: 1.6;
+  
+}
+
+section{
+  padding: var(--padding-size);
+  height: var(--screen-size);
+}
+
+/*===== HEADER ===== */
+.nav_img_logo {
+    width: 50%;
+}
+header {
+    position: sticky;
+    top:0;
+    z-index:var(--z-fixed);
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    background: var(--background-color);
+    
+    
+}
+header .header-left {
+    display: flex;
+    align-items: center;
+}
+header .header-left .logo {
+    width: 140px;
+}
+header .header-left nav {
+    margin-left: 130px; 
+}
+header .header-left nav ul {
+    display: flex;
+}
+nav ul li a {
+    display: block;
+    color: var(--dark-color);
+    margin: 3px 30px;
+    padding: 2px 0px;
+    transition: 0.1s;
+    
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: black;
+    border-bottom: 3px solid var(--secondary-color);
+}
+nav .login-signup {
+    display: none;
+}
+header .header-right {
+    display: flex;
+    align-items: center;
+}
+header .login-signup {
+    color: #cfd9e0;
+    
+}
+header .login-signup a {
+    display: inline-block;
+    color: var(--white-color);
+    background: var(--primary-color);
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+header .login-signup a:hover{
+  background: var(--dark-prim-color);
+}
+header .header-right .hamburger {
+    margin-left: 20px;
+    cursor: pointer;
+    display: none;
+}
+header .header-right .hamburger div {
+    width: 25px;
+    height: 1px;
+    margin: 6px 0;
+    background: var(--dark-color);
+    
+}
+@media only screen and (max-width: 1100px) {
+    header {
+        height: 100px;
+        padding: 0 20px;
+    }
+    header .header-right .hamburger {
+        display: block;
+    }
+    header .header-left nav {
+        margin: 0;
+        position: absolute;
+        top: -250%;
+        left: 0;
+        width: 100%;
+        height: fit-content;
+        background-color: var(--primary-color);
+        padding: 30px 30px 0 30px;
+        transition: 0.3s;
+        text-align: center;
+        z-index: -1;
+        filter: drop-shadow(1px 1px 3px rgb(59, 59, 59));
+    }
+
+    header .header-left nav.active {
+        top: 90px;
+    
+    }
+    header .header-left nav ul {
+        display: block;
+    }
+    nav ul li a:hover, nav ul li a.active {
+        border-bottom: 0px solid var(--secondary-color);
+    }
+
+}
+@media only screen and (max-width: 500px) {
+    header .login-signup a {
+        background: var(--secondary-color)
+        
+    }
+    header .header-left nav {
+        padding: 30px;
+    }
+    nav .login-signup {
+        display: block;
+        margin-top: 20px;
+    }
+    header .header-right .login-signup {
+        display: none;
+    }
+}
+
+/* ++++++++ ENTRANCE PAGE ++++++++ */
+  .home{
+    display: flex;
+    margin-top:0px;
+  }
+  
+  .home > * {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  /* LEFT SIDE */
+  
+  .home-text{
+    display: flex;
+    justify-content: center;
+    margin: 60px 0 0 20%;
+    padding-left: 40px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    border-left: 4px solid var(--secondary-color);
+  }
+  
+  .home-greet {
+    font-size: 1.2rem;
+    font-family: "martel";
+    color: var(--dark-color);
+    font-weight: 1;
+  }
+  
+  .home-system {
+    font-size: var(--h1-font-size);
+    margin-bottom: var(--mb-3);
+    font-family: "martel";
+    font-weight: 1000;
+    line-height: 35px;
+  }
+
+  .home-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* RIGHT SIDE */
+  .greenimg{
+    width: 60%;
+  }
+  .EcoXchange{
+    width: 100%;
+  }
+  .button-gs{
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color:var(--white-color);
+    padding:10px 30px 10px 30px;
+    width:fit-content;
+    border-radius: 10px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .button-gs:hover{
+    background-color: var(--dark-prim-color);
+  }
+  /* ++++++++ ABOUT PAGE ++++++++ */  
+
+ .about-container{
+    display: flex;
+    flex: 50%;
+    align-items: center;
+ }
+ .about-container > * {
+    width: 100%;
+    padding: 1rem;
+  }
+ .about-text{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+ }
+ 
+ .about-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ .about-text a{
+    margin:30px 0px;
+ }
+
+ .secondimg{
+  height: 100%;
+  width: 80%;
+ }
+ 
+/* Resposive Page */
+ @media only screen and (max-width: 700px) {
+  .home-img, .about-img{
+    display: none;
+  }
+  .home-text{
+    margin: 40px 0 0 10%
+  }
+  .about-text a{
+    margin:0;
+  }
+}
+  /* ++++++++ OUR TEAM ++++++++ */  
+.team{
+  height: auto;
+}
+.team-container{
+  padding-bottom: 100px;
+  width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+}
+.team-container > * {
+  width: 100%;
+  padding: 1rem;
+}
+
+.profileImg{
+  width: 120px;
+}
+.role{
+  color:var(--white-color);
+}
+.name{
+    color:var(--white-color);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+} 
+.row{
+    display:grid;
+    justify-content: center;
+    gap:20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px,250px));
+}
+
+.team-col{
+    flex-basis: 31%;
+    background: var(--primary-color);
+    border-radius: 10px; /*bagi ada bucu */
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+
+
+.team-col:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+    background: var(--dark-prim-color);
+}
+
+@media(max-width: 700px){
+    .row{
+        flex-direction:column;
+
+    }
+}
+
+
+  /* ++++++++ FAQ ++++++++ */ 
+.faq {
+    padding: 180px 20px;
+    background-color: var(--background-color); 
+    height: auto;
+    font-family:"martel";
+  }
+
+.faq-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  flex-direction: column;
+  
+}
+.faq-text{
+  font-size: var (--h1-font-size);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+.txttitle{
+    font-size: var(--h1-font-size);
+    margin-bottom: var(--mb-3);
+    font-family: "martel";
+    font-weight: 1000;
+    line-height: 35px;
+}
+.button-faq{
+  text-decoration: none;
+  background-color: var(--primary-color);
+  color:var(--white-color);
+  padding:20px 20px;
+  width: 100%;
+  border-radius: 10px;
+  font-family: "martel";
+  font-size: 1rem;
+  margin-bottom: 15px;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+  
+.faq-answer{
+  
+  padding: 20px 100px;
+  width:100%;
+  border: 1px solid var(--primary-color);
+  border-radius:5px;
+  background-color: var(--white-color);
+  display:none;
+  font-family: "martel";
+  font-size: 1rem;
+  margin-bottom:15px;
+  overflow:auto;
+}
+.faq-icon{
+  flex-shrink: 0;
+  width:30px;
+  height:30px;
+  cursor: pointer;
+}
+.faq-text {
+  flex-grow: 1; 
+  text-align: center; 
+}
+.faq-lamp{
+  width:30px;
+  height:30px;
+  flex-shrink: 0;
+}
+/* Show/hide animation */
+.faq-answer.active {
+  display: block;
+}
+
+/* Media Queries */
+@media (min-width: 700px) {
+  .faq {
+    padding: 100px;
+  }
+
+  .faq-text {
+    font-size: 1.2rem;
+  }
+
+  .txttitle {
+    font-size: var(--h1-font-size);
+  }
+
+  .button-faq {
+    font-size: 1.2rem;
+  }
+
+  .faq-answer {
+    font-size: 1.2rem;
+  }
+
+  .faq-icon, .faq-lamp {
+    width: 50px;
+    height: 50px;
+  }
+}
+  /* ++++++++ FOOTER PAGE ++++++++ */  
+.footer {
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.footer-container {
+  margin-top: 8rem;
+  padding: 3rem 0;
+}
+.footer-img {
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 2fr));
+  margin-bottom: var(--mb-3);
+}
+
+.uitm{
+  width: 100px;
+}
+.footer-quotes {
+  margin-bottom: var(--mb-4);
+}
+
+.footer-slogan {
+  font-size: var(--smaller-font-size);
+  color: var(--dark-color);
+}
