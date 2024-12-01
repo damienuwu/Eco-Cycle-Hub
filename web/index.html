@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
         <header class="page-header">
@@ -15,8 +15,7 @@
 
             <nav class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="team.html" class="nav-link">Our Team</a>
-                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="#team-section" class="nav-link" id="our-team-btn">Our Team</a>
             </nav>
 
             <div class="header-btns">
@@ -35,5 +34,52 @@
                 <img src="images/home-image.png" alt="Welcome Image">
             </div>
         </div>
+
+        <!-- Team Section -->
+        <section id="team-section" class="team-section">
+            <h2>Meet Our Team</h2>
+            <p class="team-intro">Meet the Dream Team Dedicated to Transforming Ideas into Reality!</p>
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="images/muizz.jpeg" alt="Luqman Mu'izz">
+                    <h3>Luqman Mu'izz</h3>
+                    <p class="role"><i class="icon-star"></i> Team Leader</p>
+                </div>
+                <div class="team-member">
+                    <img src="images/eiman.jpg" alt="Eiman Damien">
+                    <h3>Eiman Damien</h3>
+                    <p class="role"><i class="icon-database"></i> Database Designer</p>
+                </div>
+                <div class="team-member">
+                    <img src="images/mahdi.jpg" alt="Muhammad Mahdi">
+                    <h3>Muhammad Mahdi</h3>
+                    <p class="role"><i class="icon-code"></i> Front-End Developer</p>
+                </div>
+                <div class="team-member">
+                    <img src="images/syariful.jpg" alt="Syariful Husaini">
+                    <h3>Syariful Husaini</h3>
+                    <p class="role"><i class="icon-code"></i> Front-End Developer</p>
+                </div>
+            </div>
+        </section>
+
+
+        <script> 
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            document.querySelector('.nav-link[href="index.html"]').addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
     </body>
 </html>
