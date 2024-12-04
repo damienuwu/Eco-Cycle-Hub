@@ -17,9 +17,9 @@ html {
     list-style: none;
 }
 body {
-  margin: 100% 0 0 0;
+  margin: 0 0 0 0;
   font-family: "Poppins";
-  font-size: 1rem;
+  font-size: 0.938rem;
   font-weight: 400;
   background-color: #FBF6F1;
   /* color: #353535; */
@@ -147,7 +147,7 @@ header .header-right .hamburger div {
 }
 @media only screen and (max-width: 500px) {
     header .login-signup a {
-        background: #136B40;        
+        background: #136B40;
     }
     header .header-left nav {
         padding: 30px;
@@ -208,6 +208,9 @@ header .header-right .hamburger div {
   /* RIGHT SIDE */
   .greenimg{
     width: 60%;
+  }
+  .EcoXchange{
+    width: 100%;
   }
   .button-gs{
     text-decoration: none;
@@ -328,7 +331,7 @@ header .header-right .hamburger div {
   /* ++++++++ FAQ ++++++++ */ 
 .faq {
     padding: 180px 20px;
-    background-color: #FBF6F1;
+    background-color: #FBF6F1; 
     height: auto;
     font-family:"martel";
   }
@@ -379,7 +382,7 @@ header .header-right .hamburger div {
   width:100%;
   border: 1px solid #94AB6F;
   border-radius:5px;
-  background-color:#FBF6F1;
+  background-color: #fff;
   display:none;
   font-family: "martel";
   font-size: 1rem;
