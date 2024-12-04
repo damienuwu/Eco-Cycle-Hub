@@ -1,68 +1,6 @@
 /*===== GOOGLE FONTS =====*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600");
 
-/* DESKTOP SIZE */
-/*===== VARIABLES CSS =====*/
-:root {
-  /*===== Colors =====*/
-  --background-color: #FBF6F1;
-  --primary-color: #94AB6F;
-  --dark-prim-color: #849B60;
-  --secondary-color: #136B40;
-  --white-color: #fff;
-  --dark-color: #353535;
-  --black-color: black;
-  --text-grey: grey;
-
-  /*===== Font and typography =====*/
-  --body-font: "Poppins", sans-serif, "Martel";
-  --biggest-font-size: 4.5rem;
-  --h1-font-size: 2.5rem;
-  --h2-font-size: 1.5rem;
-  --h3-font-size: 1.25rem;
-  --normal-font-size: 1rem;
-  --small-font-size: 0.875rem;
-  --smaller-font-size: 0.813rem;
-
-  /*===== Font weight =====*/
-  --font-medium: 400;
-  --font-semi-bold: 600;
-  --font-bold: 700;
-
-  /*===== Margins =====*/
-  --mb-1: 0.5rem;
-  --mb-2: 1rem;
-  --mb-3: 1.5rem;
-  --mb-4: 2rem;
-  --mb-5: 2.5rem;
-  --mb-6: 3rem;
-
-  /*===== z index =====*/
-  --z-normal: 1;
-  --z-tooltip: 10;
-  --z-fixed: 100;
-
-  /*===== screen size =====*/
-  --screen-size: 80vh;
-  --padding-size: 4rem 0 2rem;
-}
-
-/* TABLET SIZE */
-  @media screen and (max-width: 900px) {
-    :root {
-      --screen-size: 60vh;
-      --padding-size: 0rem;
-      --biggest-font-size: 2.5rem;
-      --h1-font-size: 1.5rem;
-      --h2-font-size: 1.25rem;
-      --h3-font-size: 1.125rem;
-      --normal-font-size: 0.938rem;
-      --small-font-size: 0.813rem;
-      --smaller-font-size: 0.75rem;
-    }
-  }
-
-/*===== BASE ===== */
 *,
 ::before,
 ::after {
@@ -79,19 +17,19 @@ html {
     list-style: none;
 }
 body {
-  margin: var(--header-height) 0 0 0;
-  font-family: var(--body-font);
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-medium);
-  background-color: var(--background-color);
-  /* color: var(--dark-color); */
+  margin: 100% 0 0 0;
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: #FBF6F1;
+  /* color: #353535; */
   line-height: 1.6;
   
 }
 
 section{
-  padding: var(--padding-size);
-  height: var(--screen-size);
+  padding: 4rem 0 2rem;
+  height: 80vh;
 }
 
 /*===== HEADER ===== */
@@ -101,13 +39,13 @@ section{
 header {
     position: sticky;
     top:0;
-    z-index:var(--z-fixed);
+    z-index:100;
     height: 140px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 50px;
-    background: var(--background-color);
+    background: #FBF6F1;
     
     
 }
@@ -126,7 +64,7 @@ header .header-left nav ul {
 }
 nav ul li a {
     display: block;
-    color: var(--dark-color);
+    color: #353535;
     margin: 3px 30px;
     padding: 2px 0px;
     transition: 0.1s;
@@ -136,7 +74,7 @@ nav ul li a {
 nav ul li a:hover,
 nav ul li a.active {
     color: black;
-    border-bottom: 3px solid var(--secondary-color);
+    border-bottom: 3px solid #136B40;
 }
 nav .login-signup {
     display: none;
@@ -151,14 +89,14 @@ header .login-signup {
 }
 header .login-signup a {
     display: inline-block;
-    color: var(--white-color);
-    background: var(--primary-color);
+    color: #fff;
+    background: #94AB6F;
     padding: 5px 10px;
     margin: 0 5px;
     border-radius: 10px;
 }
 header .login-signup a:hover{
-  background: var(--dark-prim-color);
+  background: #849B60;
 }
 header .header-right .hamburger {
     margin-left: 20px;
@@ -169,7 +107,7 @@ header .header-right .hamburger div {
     width: 25px;
     height: 1px;
     margin: 6px 0;
-    background: var(--dark-color);
+    background: #353535;
     
 }
 @media only screen and (max-width: 1100px) {
@@ -187,7 +125,7 @@ header .header-right .hamburger div {
         left: 0;
         width: 100%;
         height: fit-content;
-        background-color: var(--primary-color);
+        background-color: #94AB6F;
         padding: 30px 30px 0 30px;
         transition: 0.3s;
         text-align: center;
@@ -203,14 +141,13 @@ header .header-right .hamburger div {
         display: block;
     }
     nav ul li a:hover, nav ul li a.active {
-        border-bottom: 0px solid var(--secondary-color);
+        border-bottom: 0px solid #136B40;
     }
 
 }
 @media only screen and (max-width: 500px) {
     header .login-signup a {
-        background: var(--secondary-color)
-        
+        background: #136B40;        
     }
     header .header-left nav {
         padding: 30px;
@@ -245,19 +182,19 @@ header .header-right .hamburger div {
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid #136B40;
   }
   
   .home-greet {
     font-size: 1.2rem;
     font-family: "martel";
-    color: var(--dark-color);
+    color: #353535;
     font-weight: 1;
   }
   
   .home-system {
-    font-size: var(--h1-font-size);
-    margin-bottom: var(--mb-3);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     font-family: "martel";
     font-weight: 1000;
     line-height: 35px;
@@ -274,8 +211,8 @@ header .header-right .hamburger div {
   }
   .button-gs{
     text-decoration: none;
-    background-color: var(--primary-color);
-    color:var(--white-color);
+    background-color: #94AB6F;
+    color:#fff;
     padding:10px 30px 10px 30px;
     width:fit-content;
     border-radius: 10px;
@@ -283,7 +220,7 @@ header .header-right .hamburger div {
   }
 
   .button-gs:hover{
-    background-color: var(--dark-prim-color);
+    background-color: #849B60;
   }
   /* ++++++++ ABOUT PAGE ++++++++ */  
 
@@ -349,10 +286,10 @@ header .header-right .hamburger div {
   width: 120px;
 }
 .role{
-  color:var(--white-color);
+  color:#fff;
 }
 .name{
-    color:var(--white-color);
+    color:#fff;
     font-size: 14px;
     font-weight: 300;
     line-height: 22px;
@@ -367,7 +304,7 @@ header .header-right .hamburger div {
 
 .team-col{
     flex-basis: 31%;
-    background: var(--primary-color);
+    background: #94AB6F;
     border-radius: 10px; /*bagi ada bucu */
     margin-bottom: 5%;
     padding: 20px 12px;
@@ -377,7 +314,7 @@ header .header-right .hamburger div {
 
 .team-col:hover{
     box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
-    background: var(--dark-prim-color);
+    background: #849B60;
 }
 
 @media(max-width: 700px){
@@ -391,7 +328,7 @@ header .header-right .hamburger div {
   /* ++++++++ FAQ ++++++++ */ 
 .faq {
     padding: 180px 20px;
-    background-color: var(--background-color); 
+    background-color: #FBF6F1;
     height: auto;
     font-family:"martel";
   }
@@ -404,7 +341,7 @@ header .header-right .hamburger div {
   
 }
 .faq-text{
-  font-size: var (--h1-font-size);
+  font-size: 2.5rem;
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -414,16 +351,16 @@ header .header-right .hamburger div {
   padding: 0 20px;
 }
 .txttitle{
-    font-size: var(--h1-font-size);
-    margin-bottom: var(--mb-3);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     font-family: "martel";
     font-weight: 1000;
     line-height: 35px;
 }
 .button-faq{
   text-decoration: none;
-  background-color: var(--primary-color);
-  color:var(--white-color);
+  background-color: #94AB6F;
+  color:#fff;
   padding:20px 20px;
   width: 100%;
   border-radius: 10px;
@@ -440,9 +377,9 @@ header .header-right .hamburger div {
   
   padding: 20px 100px;
   width:100%;
-  border: 1px solid var(--primary-color);
+  border: 1px solid #94AB6F;
   border-radius:5px;
-  background-color: var(--white-color);
+  background-color:#FBF6F1;
   display:none;
   font-family: "martel";
   font-size: 1rem;
@@ -480,7 +417,7 @@ header .header-right .hamburger div {
   }
 
   .txttitle {
-    font-size: var(--h1-font-size);
+    font-size: 2.5rem;
   }
 
   .button-faq {
@@ -498,8 +435,8 @@ header .header-right .hamburger div {
 }
   /* ++++++++ FOOTER PAGE ++++++++ */  
 .footer {
-  background-color: var(--primary-color);
-  color: var(--primary-color);
+  background-color: #94AB6F;
+  color: #94AB6F;
   text-align: center;
 }
 
@@ -514,17 +451,17 @@ header .header-right .hamburger div {
   margin-right: auto;
   width: 70px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 2fr));
-  margin-bottom: var(--mb-3);
+  margin-bottom: 1.5rem;
 }
 
 .uitm{
   width: 100px;
 }
 .footer-quotes {
-  margin-bottom: var(--mb-4);
+  margin-bottom: 2rem;
 }
 
 .footer-slogan {
-  font-size: var(--smaller-font-size);
-  color: var(--dark-color);
+  font-size: 0.813rem;
+  color: #353535;
 }
