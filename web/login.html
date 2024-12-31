@@ -3,24 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>EcoCycleHub | Login</title>
         <link rel="stylesheet" href="css/login-registration.css">
-        
-        <script>
-            function handleLogin(event) {
-                event.preventDefault(); // Prevent form submission
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
 
-                if (username === 'customer' && password === '123') {
-                    window.location.href = 'Customer/DashboardCustomer.html'; // Redirect to customer dashboard
-                } else if (username === 'admin' && password === '123') {
-                    window.location.href = 'Admin/DashboardAdmin.html'; // Redirect to admin dashboard
-                } else {
-                    alert('Invalid username or password. Please try again.');
-                }
-            }
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
         <header class="page-header">
@@ -49,7 +35,7 @@
                 </div>
                 <h2>Welcome Back</h2>
                 <p>Let's contribute to a sustainable future.</p>
-                <form onsubmit="handleLogin(event)">
+                <form id="loginForm" action="LoginServlet" method="post">
                     <div class="form-group">
                         <input type="text" id="username" name="username" placeholder=" " required>
                         <label for="username">Username</label>
@@ -63,5 +49,53 @@
                 <p>Don't have an account? <a href="registration.html">Register Here</a></p>
             </div>
         </div>
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                fetch(this.action, {
+                    method: 'POST', // Make sure to use POST for login form
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded' // Standard content type for form submission
+                    },
+                    body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "success") {
+                                Swal.fire({
+                                    title: "Login Successful!",
+                                    text: "Welcome to EcoCycleHub!",
+                                    icon: "success",
+                                    confirmButtonText: "Proceed",
+                                    confirmButtonColor: "#76b87a"
+                                }).then(() => {
+                                    window.location.href = data.redirectUrl;
+                                });
+                            } else if (data.status === "error") {
+                                Swal.fire({
+                                    title: "Login Failed",
+                                    text: data.message,
+                                    icon: "error",
+                                    confirmButtonText: "Try Again",
+                                    confirmButtonColor: "#f27474"
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                title: "Error",
+                                text: "An unexpected error occurred. Please try again later.",
+                                icon: "error",
+                                confirmButtonText: "Okay",
+                                confirmButtonColor: "#f27474"
+                            });
+                        });
+            });
+        </script>
     </body>
 </html>

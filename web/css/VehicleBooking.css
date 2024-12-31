@@ -1,0 +1,187 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #FBF6F1;
+    color: #333;
+}
+
+.main {
+    position: relative;
+    padding: 20px 34px;
+    margin-left: 300px;
+    background: #f9f9f9;
+    height: 100vh;
+    transition: all 0.3s ease;
+    overflow: auto;
+}
+
+.main.expanded {
+    margin-left: 60px; /* Main content shifts when sidebar collapses */
+    transition: margin-left 0.3s ease;
+}
+
+/* Avatar image and text styling */
+.avatar-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.change-text {
+    font-size: 14px;
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.avatar:hover .change-text {
+    opacity: 1;
+}
+
+/* Sidebar active link */
+.navigation .active a {
+    border-radius: 5px;
+}
+
+/* Sidebar logo */
+.sidebar-logo {
+    width: 30px;
+    height: auto;
+}
+
+/* Main content adjustments for collapsed sidebar */
+/*.main-content {
+    transition: margin-left 0.3s ease;
+    margin-left: 300px;  Default sidebar width 
+}*/
+
+/* When sidebar is collapsed, adjust content */
+.navigation.collapsed + .main {
+    margin-left: 60px; /* Remove left margin when collapsed */
+}
+
+/* Sidebar content adjustment for collapsed state */
+.navigation {
+    width: 300px;
+    transition: width 0.3s ease;
+}
+
+.navigation.collapsed {
+    width: 50px; /* Collapsed width for sidebar */
+}
+
+/* Sidebar logo and text adjustments when collapsed */
+.navigation.collapsed .sidebar-logo {
+    display: none; /* Hide logo when sidebar is collapsed */
+}
+
+.navigation.collapsed .title {
+    display: none; /* Hide sidebar text when collapsed */
+}
+
+/* Adjust sidebar links */
+.navigation .list-unstyled li {
+    padding-left: 15px;
+}
+
+/* Smooth transition effect for avatar change text */
+.avatar-img:hover + .change-text {
+    opacity: 1;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa; /* Light gray for striped rows */
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #e9ecef; /* Slightly darker gray on hover */
+}
+
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+/* Dropdown background transition */
+.form-select {
+    width: auto; /* Will adjust to the content */
+    min-width: 120px; /* Ensures there's a minimum width */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+/* Responsive Design: Profile form and avatar */
+@media (max-width: 767px) {
+    .main-content {
+        margin-left: 0; /* Ensure no margin on small screens */
+    }
+
+    .profile {
+        margin-bottom: 20px; /* Ensure spacing between avatar and form */
+    }
+
+    .userdata label {
+        font-size: 14px; /* Reduce label font size on smaller screens */
+    }
+
+    .form-control {
+        font-size: 14px; /* Reduce input field font size on smaller screens */
+    }
+
+    .btn {
+        font-size: 16px; /* Adjust button font size for better accessibility */
+    }
+}
+
+/* Styling the dropdown for a modern look */
+.status-dropdown {
+    border: 1px solid #4CAF50; /* Green border for the dropdown */
+    border-radius: 10px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    padding: 8px 12px; /* Padding for better spacing */
+    transition: all 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Specific color for each option */
+.status-dropdown .pending-option {
+    background-color: #FFEB3B; /* Yellow for Pending */
+    color: #333; /* Dark text color for visibility */
+}
+
+.status-dropdown .inprogress-option {
+    background-color: #2196F3; /* Blue for In Progress */
+    color: white; /* White text for contrast */
+}
+
+.status-dropdown .success-option {
+    background-color: #4CAF50; /* Green for Success */
+    color: white; /* White text for contrast */
+}
+
+.status-dropdown .canceled-option {
+    background-color: #F44336; /* Red for Canceled */
+    color: white; /* White text for contrast */
+}
+
+/* Color the selected option based on the value */
+.status-dropdown option:checked {
+    background-color: #2196F3; /* Default color for selected option (blue) */
+    color: white; /* White text color */
+}
+
+/* Hover effect for the dropdown options */
+.status-dropdown option:hover {
+    background-color: #FFC107; /* Light yellow on hover */
+    color: white; /* White text on hover */
+}
+
+/* On focus, add a glowing effect */
+.status-dropdown:focus {
+    border-color: #FFC107; /* Yellow border on focus */
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.7); /* Glowing effect */
+}

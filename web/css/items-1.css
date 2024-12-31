@@ -1,25 +1,26 @@
-/* Importing other CSS files */
-@import "css/style.css";
-
-/* General layout adjustments */
-.in-content {
-    margin: 5px 50px;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #FBF6F1;
+    color: #333;
 }
 
-.table1 tr {
-    background-color: white;
-    color: black;
+.main {
+    position: relative;
+    padding: 20px 34px;
+    margin-left: 300px;
+    background: #f9f9f9;
+    height: 100vh;
+    transition: all 0.3s ease;
+    overflow: auto;
 }
 
-.table1 td, .table1 th {
-    text-align: center;
+.main.expanded {
+    margin-left: 60px;
+    width: calc(100% - 60px);
 }
 
-.table1 th {
-    background-color: white;
-}
-
-/* ================== Item List ============== */
 .details {
     position: relative;
     width: 100%;
@@ -49,11 +50,12 @@
 }
 
 .tableHeader .btn {
-    padding: 5px 10px;
+    padding: 8px 15px;
     background: #4CAF50;
     text-decoration: none;
     color: #ffffff;
     border-radius: 6px;
+    transition: background-color 0.3s;
 }
 
 .tableHeader .btn:hover {
@@ -64,9 +66,11 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.details table thead td {
+.details table thead td,
+.details table thead th {
     font-weight: 600;
     text-align: center;
 }
@@ -86,7 +90,6 @@
 }
 
 .details .itemlist table tr td {
-    padding: 10px;
     text-align: center;
 }
 
@@ -95,15 +98,28 @@
     border-radius: 5px;
 }
 
-/* ====================== Responsive Design ========================== */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #28a745;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-footer {
+    border-top: 1px solid #ddd;
+}
+
+.btn-outline-secondary {
+    border-radius: 20px;
+}
+
+
 @media (max-width: 991px) {
-    .navigation {
-        left: -300px;
-    }
-    .navigation.active {
-        width: 300px;
-        left: 0;
-    }
     .main {
         width: 100%;
         left: 0;
@@ -122,15 +138,5 @@
 @media (max-width: 480px) {
     .tableHeader h2 {
         font-size: 20px;
-    }
-
-    .navigation {
-        width: 100%;
-        left: -100%;
-        z-index: 1000;
-    }
-    .navigation.active {
-        width: 100%;
-        left: 0;
     }
 }

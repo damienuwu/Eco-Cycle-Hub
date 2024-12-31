@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #FBF6F1;
+    color: #333;
+}
+
+.main {
+    position: relative;
+    padding: 20px;
+    margin-left: 300px;
+    background: #f9f9f9;
+    height: 100vh;
+    transition: all 0.3s ease;
+    overflow: auto;
+}
+
+.main.expanded {
+    margin-left: 60px; /* Main content shifts when sidebar collapses */
+    transition: margin-left 0.3s ease;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #1d3557;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Avatar */
+.avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #e9ecef;
+}
+
+.change-avatar {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.85rem;
+    background-color: #457b9d;
+    padding: 5px 12px;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.change-avatar:hover {
+    background-color: #1d3557;
+}
+
+/* Table Styling */
+.table {
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #457b9d;
+    color: white;
+}
+
+.table td {
+    background-color: #f8f9fa;
+}
+
+
+.btn-primary {
+    background-color: #1d3557;
+    border-color: #1d3557;
+}
+
+.btn-primary:hover {
+    background-color: #457b9d;
+}
+
+/* Form Inputs */
+.form-control {
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    border-color: #457b9d;
+}

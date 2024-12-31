@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #FBF6F1;
+    color: #333;
+}
+
+.main {
+    position: relative;
+    padding: 20px 34px;
+    margin-left: 300px;
+    background: #f9f9f9;
+    height: 100vh;
+    transition: all 0.3s ease;
+    overflow: auto;
+}
+
+.main.expanded {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+.avatar-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.change-text {
+    font-size: 14px;
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.avatar:hover .change-text {
+    opacity: 1;
+}
+
+.navigation .active a {
+    border-radius: 5px;
+}
+
+.sidebar-logo {
+    width: 30px;
+    height: auto;
+}
+
+.main-content {
+    transition: margin-left 0.3s ease;
+    margin-left: 250px; 
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+.navigation.collapsed {
+    width: 50px;
+}
+
+.navigation {
+    transition: width 0.3s ease;
+}
+
+.navigation.collapsed .sidebar-logo {
+    display: none;
+}
+
+.navigation .list-unstyled li {
+    padding-left: 15px;
+}
+
+.navigation.collapsed .title {
+    display: none;
+}
+
+.avatar-img:hover + .change-text {
+    opacity: 1;
+}
+
+.btn-soft-green {
+    background-color: #70ad07;
+    color: #fff;
+    font-size: 0.9rem; 
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-soft-green:hover {
+    background-color: #7cb342;
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .profile {
+        margin-bottom: 20px;
+    }
+
+    .userdata label {
+        font-size: 14px;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+}

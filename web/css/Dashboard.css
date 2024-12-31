@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -7,94 +6,23 @@ body {
     color: #333;
 }
 
-/* Sidebar Navigation */
-.navigation {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 300px;
-    height: 100%;
-    background: #76b87a;
-    padding: 20px 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    overflow: hidden;
-}
-
-.navigation.collapsed {
-  width: 60px; /* Shrink the sidebar width */
-}
-
-.navigation ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.navigation ul li {
-    margin: 15px 0;
-}
-
-.navigation li {
-  list-style: none;
-  padding: 10px;
-  cursor: pointer;
-  color: white;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflowed text */
-  text-overflow: ellipsis; /* Add ellipsis (...) for collapsed state */
-  transition: all 0.3s ease;
-}
-
-.navigation li.hovered {
-  background: #54a06d; /* Highlight the hovered item */
-  color: white;
-  border-radius: 5px;
-}
-
-.navigation ul li a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    transition: background 0.3s ease;
-}
-
-.navigation ul li a:hover {
-    background: #5c9e64;
-}
-
-.navigation ul li a .icon {
-    min-width: 30px;
-    font-size: 18px;
-}
-
-.navigation ul li a .icon .sidebar-logo {
-    width: 70px; /* Adjust the width as needed */
-    height: auto;
-}
-
-.navigation ul li a .title {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* Main Section */
 .main {
     position: relative;
     padding: 20px;
     margin-left: 300px;
     background: #f9f9f9;
     height: 100vh;
-    transition: margin-left 0.3s ease;
+    transition: all 0.3s ease;
     overflow: auto;
 }
 
+.main.expanded {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+}
+
 .navigation.collapsed + .main {
-  margin-left: 60px; /* Align with the collapsed sidebar */
+    margin-left: 60px;
 }
 
 /* Topbar */
@@ -116,7 +44,6 @@ body {
     object-fit: cover;
 }
 
-/* Dashboard content customer */
 .content {
     text-align: center;
     font-family: Arial, sans-serif;
@@ -124,7 +51,6 @@ body {
     border-radius: 8px;
     height: 75vh;
 
-    /* Flexbox centering */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,10 +66,14 @@ body {
 .item {
     background: #f6f9f4;
     border: 2px solid #b7d4b6;
-    border-radius: 8px;
     width: 300px;
+    border-radius: 8px;
     padding: 15px;
     text-align: center;
+    flex-basis: calc(33.333% - 1rem);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+    gap: 20px;
 }
 
 .item p {
@@ -165,8 +95,9 @@ body {
 
 .bottom-row {
     display: flex;
-    gap: 20px; 
-    
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
 }
 
 .recycle-btn {
@@ -183,40 +114,6 @@ body {
 
 .recycle-btn:hover {
     background-color: #6a946b;
-}
-
-
-/* Dashboard Cards Admin */
-.cardBox {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 20px;
-}
-
-.card {
-    background: #fff;
-    width: calc(25% - 20px);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card .numbers {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.card .cardName {
-    font-size: 14px;
-    color: #666;
 }
 
 /* Tables */
@@ -246,15 +143,7 @@ table th {
 
 table tr:hover {
     background: #f8f8f8;
-}
-
-.status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    text-transform: capitalize;
-    color: #fff;
+    font-weight: 600;
 }
 
 .status.delivered {
@@ -271,24 +160,4 @@ table tr:hover {
 
 .status.inProgress {
     background: #5bc0de;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .navigation {
-        width: 200px;
-    }
-
-    .main {
-        margin-left: 200px;
-    }
-
-    .cardBox {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .card {
-        width: 100%;
-    }
 }

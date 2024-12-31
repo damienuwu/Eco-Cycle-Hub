@@ -1,49 +1,21 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #FBF6F1;
-    color: #333;
-}
-
-.nav-links {
-    list-style: none;
-    padding: 0;
-}
-
-.nav-links li {
-    margin: 15px 0;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.nav-links a:hover {
-    text-decoration: underline;
-}
-
-.nav-links i {
-    margin-right: 10px;
-}
-
-.sign-out {
-    margin-top: auto;
-}
-
-/* Main Content */
-.main-content {
+/* Main Section */
+.main {
     position: relative;
     padding: 20px;
     margin-left: 300px;
     background: #f9f9f9;
     height: 100vh;
-    transition: margin-left 0.3s ease;
+    transition: all 0.3s ease;
     overflow: auto;
+}
+
+.main.expanded {
+    margin-left: 60px; /* Main content shifts when sidebar collapses */
+    transition: margin-left 0.3s ease;
+}
+
+.navigation.collapsed + .main {
+    margin-left: 60px; /* Align with the collapsed sidebar */
 }
 
 .items-header {

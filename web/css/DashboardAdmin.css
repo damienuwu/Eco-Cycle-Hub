@@ -1,0 +1,301 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #FBF6F1;
+    color: #333;
+}
+
+.main {
+    position: relative;
+    padding: 20px 34px;
+    margin-left: 300px;
+    background: #f9f9f9;
+    height: 100vh;
+    transition: all 0.3s ease;
+    overflow: auto;
+}
+
+.main.expanded {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+.card {
+    flex: 1 1 45%;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card .numbers {
+    font-size: 3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Card Name Styling */
+.card .cardName {
+    font-size: 1rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.card:hover {
+    transform: translateY(-8px); /* Lift effect on hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.card .iconBx {
+    font-size: 3rem;
+    color: #4CAF50; /* Green color for the icon */
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.recentOrders, .recentCustomers {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recentOrders h2, .recentCustomers h2 {
+    margin-bottom: 15px;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.status.delivered {
+    background-color: #28a745;
+}
+
+.status.pending {
+    background-color: #ffc107;
+}
+
+.status.return {
+    background-color: #dc3545;
+}
+
+.status.inProgress {
+    background-color: #17a2b8;
+}
+
+.recentCustomers h5 {
+    margin: 0;
+}
+
+.recentCustomers span {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Badge Colors */
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+}
+
+#sidebar {
+    transition: width 0.3s ease;
+}
+
+#sidebar.collapsed {
+    width: 60px; /* Collapsed sidebar width */
+}
+
+.main.expanded {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+/* Table Header Styling */
+.table thead {
+    background-color: #28a745; /* Soft green background color */
+    color: #ffffff; /* White text color for visibility */
+    font-weight: 600; /* Bold text for emphasis */
+    text-align: center; /* Horizontally center-align text */
+    padding: 12px;
+    border-radius: 10px 10px 0 0; /* Rounded corners for top edges */
+    transition: none; /* Disable any transition on hover for the header */
+}
+
+/* Table Header Cells Styling */
+.table thead th {
+    vertical-align: middle; /* Vertically center-align text */
+}
+
+/* Prevent header hover color change */
+.table thead tr:hover {
+    background-color: #28a745; /* Keep header color the same when hovered */
+}
+
+/* Table Row Styling */
+.table tbody tr {
+    text-align: center; /* Center-align text in rows */
+    font-size: 1rem; /* Set font size for better readability */
+}
+
+/* Table Cells Styling */
+.table td, .table th {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Light border for cell separation */
+    vertical-align: middle; /* Vertically center content */
+    text-align: center; /* Horizontally center content */
+}
+
+/* Table Styling */
+.table {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    border-radius: 8px; /* Rounded corners for the entire table */
+    overflow: hidden; /* Ensure the rounded corners are visible */
+}
+
+.cardBox {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Add space between cards */
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 200px; /* Adjust width for medium screens */
+    }
+
+    .main {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .main.expanded {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .cardBox {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px; /* Adds space between the cards */
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+
+/* For Tablets */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #sidebar.collapsed {
+        width: 100%;
+    }
+
+    .cardBox {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .card {
+        flex: 1 1 100%; /* Full-width cards on small screens */
+    }
+
+    /* Adjust table styling */
+    .table thead {
+        font-size: 0.9rem;
+    }
+
+    .table td {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+/* For Small Screens */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 200px; /* Adjust width for medium screens */
+    }
+
+    .main {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .main.expanded {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .cardBox {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+
+/* For Small Screens */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .cardBox {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    /* Further reduce font sizes for small screens */
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .table td {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .table thead {
+        font-size: 0.85rem;
+    }
+}

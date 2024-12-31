@@ -1,59 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="css/login-registration.css">
-</head>
-<body>
-    <header class="page-header">
-        <div class="logo-container">
-            <img src="images/logo-company.png" alt="Company Logo" class="logo">
-        </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <link rel="stylesheet" href="css/login-registration.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <nav class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-        </nav>
-
-        <div class="header-btns">
-            <a href="login.html" class="header-btn">Login</a>
-            <a href="registration.html" class="header-btn">Register</a>
-        </div>
-    </header>
-
-    <div class="login-container">
-        <aside>
-            <img src="images/login-image.png" alt="Register Image">
-        </aside>
-
-        <div class="eco-container">
+    </head>
+    <body>
+        <header class="page-header">
             <div class="logo-container">
                 <img src="images/logo-company.png" alt="Company Logo" class="logo">
             </div>
-            <h2>Join the Eco Cycle</h2>
-            <p>Be a part of our green initiative!</p>
-            <form action="register" method="post">
-                <div class="form-group">
-                    <input type="text" id="username" name="username" placeholder=" " required>
-                    <label for="username">Username</label>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+            </nav>
+
+            <div class="header-btns">
+                <a href="login.html" class="header-btn">Login</a>
+                <a href="registration.html" class="header-btn">Register</a>
+            </div>
+        </header>
+
+        <div class="login-container">
+            <aside>
+                <img src="images/login-image.png" alt="Register Image">
+            </aside>
+
+            <div class="eco-container">
+                <div class="logo-container">
+                    <img src="images/logo-company.png" alt="Company Logo" class="logo">
                 </div>
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder=" " required>
-                    <label for="email">Email</label>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="password" name="password" placeholder=" " required>
-                    <label for="password">Password</label>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder=" " required>
-                    <label for="confirm-password">Confirm Password</label>
-                </div>
-                <button type="submit" class="eco-btn">Register</button>
-            </form>
-            <p>Already have an account? <a href="login.html">Login Here</a></p>
+                <h2>Join the Eco Cycle</h2>
+                <p>Be a part of our green initiative!</p>
+                <form id="registrationForm" action="RegisterServlet" method="post">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder=" " required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder=" " required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder=" " required>
+                        <label for="confirm-password">Confirm Password</label>
+                    </div>
+                    <button type="submit" class="eco-btn">Register</button>
+                </form>
+                <p>Already have an account? <a href="login.html">Login Here</a></p>
+            </div>
         </div>
-    </div>
-</body>
+        <script>
+            document.getElementById('registrationForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                if (password !== confirmPassword) {
+                    Swal.fire({
+                        title: "Registration Failed",
+                        text: "Passwords do not match. Please try again.",
+                        icon: "error",
+                        confirmButtonText: "Okay",
+                        confirmButtonColor: "#f27474"
+                    });
+                    return;
+                }
+
+                const formData = new URLSearchParams();
+                formData.append('username', username);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('confirm-password', confirmPassword);
+
+                fetch('RegisterServlet', {
+                    method: 'POST',
+                    body: formData
+                })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json(); // Parse the response as JSON
+                        })
+                        .then(data => {
+                            if (data.status === "success") {
+                                Swal.fire({
+                                    title: "Registration Successful!",
+                                    text: data.message,
+                                    icon: "success",
+                                    confirmButtonText: "Proceed"
+                                }).then(() => {
+                                    window.location.href = "login.html";  // Redirect to login page
+                                });
+                            } else if (data.status === "error") {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: data.message,
+                                    icon: "error",
+                                    confirmButtonText: "Try Again"
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "An unexpected error occurred. Please try again later.",
+                                icon: "error",
+                                confirmButtonText: "Okay"
+                            });
+                            console.error('Error:', error); // Log any fetch errors
+                        });
+            });
+        </script>
+    </body>
 </html>

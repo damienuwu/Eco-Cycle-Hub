@@ -1,0 +1,164 @@
+/* Sidebar Navigation */
+.navigation {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 310px;
+    height: 100%;
+    background: #76b87a;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.navigation.collapsed {
+    width: 60px;
+    transition: width 0.3s ease;
+}
+
+.navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation ul li {
+    margin: 15px 0;
+}
+
+.navigation li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+
+.navigation ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navigation ul li a:hover {
+    background: #5c9e64;
+}
+
+.navigation ul li a .icon {
+    min-width: 30px;
+    font-size: 18px;
+}
+
+.navigation ul li a .icon .sidebar-logo {
+    width: 70px;
+    height: auto;
+}
+
+.navigation ul li a .title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.main {
+    margin-left: 310px;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    width: calc(100% - 310px);
+}
+
+@media (max-width: 768px) {
+    .navigation {
+        width: 250px; /* Adjust width for smaller devices */
+        padding: 15px 0; /* Adjust padding */
+    }
+
+    .navigation.collapsed {
+        width: 60px; /* Collapse width */
+    }
+
+    .main-content {
+        margin-left: 250px; /* Adjust main content margin */
+        width: calc(100% - 250px); /* Adjust width when sidebar is resized */
+    }
+
+    .navigation ul li a .icon {
+        min-width: 25px; /* Smaller icons for tablet */
+    }
+
+    .navigation ul li a .title {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+
+/* For Small Screens (Mobile devices) */
+@media (max-width: 480px) {
+    .navigation {
+        width: 200px; /* Smaller sidebar for mobile */
+        padding: 10px 0; /* Less padding */
+    }
+
+    .navigation.collapsed {
+        width: 60px; /* Collapsed width for mobile */
+    }
+
+    .main-content {
+        margin-left: 200px; /* Adjust main content margin */
+        width: calc(100% - 200px); /* Adjust width when sidebar is resized */
+    }
+
+    .navigation ul li a .icon {
+        min-width: 20px; /* Even smaller icons for mobile */
+    }
+
+    .navigation ul li a .title {
+        display: none; /* Hide titles for mobile */
+    }
+
+    /* Adjust collapsed state for mobile */
+    .navigation.collapsed {
+        width: 60px;
+    }
+
+    .navigation ul li a {
+        padding: 10px 15px; /* Adjust padding for mobile */
+    }
+
+    .navigation ul li a .icon {
+        min-width: 30px; /* Ensure icons fit */
+    }
+}
+
+/* For very small screens or portrait phones */
+@media (max-width: 375px) {
+    .navigation {
+        width: 180px; /* Even smaller sidebar width for smaller screens */
+    }
+
+    .navigation.collapsed {
+        width: 60px; /* Collapsed sidebar for very small screens */
+    }
+
+    .main-content {
+        margin-left: 180px; /* Adjust main content margin for small screens */
+        width: calc(100% - 180px); /* Adjust width accordingly */
+    }
+
+    .navigation ul li a .icon {
+        min-width: 18px; /* Further reduce icon size */
+    }
+
+    .navigation ul li a .title {
+        display: none; /* Hide titles to make space */
+    }
+}
