@@ -17,70 +17,85 @@ public class TableCreation {
             System.out.println("Connected to the database!");
 
             // Check and create tables
-            createTableIfNotExists(connection, "BANK_DETAILS", 
-                "CREATE TABLE bank_details (" +
-                "bank_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "bank_name VARCHAR(50), " +
-                "bank_acc_no VARCHAR(30), " +
-                "bank_full_name VARCHAR(50))");
+            createTableIfNotExists(connection, "BANK_DETAILS",
+                    "CREATE TABLE bank_details ("
+                    + "bank_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "bank_name VARCHAR(50), "
+                    + "bank_acc_no VARCHAR(30), "
+                    + "bank_full_name VARCHAR(50))");
 
-            createTableIfNotExists(connection, "CUSTOMER", 
-                "CREATE TABLE Customer (" +
-                "cust_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "cust_username VARCHAR(20) UNIQUE NOT NULL, " +
-                "cust_password VARCHAR(128) NOT NULL, " +
-                "cust_first_name VARCHAR(30), " +
-                "cust_last_name VARCHAR(30), " +
-                "cust_contact_no VARCHAR(30), " +
-                "cust_email VARCHAR(30), " +
-                "bank_id INT, " +
-                "profile_picture VARCHAR(255), " +
-                "FOREIGN KEY (bank_id) REFERENCES bank_details(bank_id))");
+            createTableIfNotExists(connection, "CUSTOMER",
+                    "CREATE TABLE Customer ("
+                    + "cust_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "cust_username VARCHAR(20) UNIQUE NOT NULL, "
+                    + "cust_password VARCHAR(128) NOT NULL, "
+                    + "cust_first_name VARCHAR(30), "
+                    + "cust_last_name VARCHAR(30), "
+                    + "cust_contact_no VARCHAR(30), "
+                    + "cust_email VARCHAR(30), "
+                    + "bank_id INT, "
+                    + "profile_picture VARCHAR(255), "
+                    + "FOREIGN KEY (bank_id) REFERENCES bank_details(bank_id))");
 
-            createTableIfNotExists(connection, "STAFF", 
-                "CREATE TABLE Staff (" +
-                "staff_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "staff_username VARCHAR(20) NOT NULL UNIQUE, " +
-                "staff_password VARCHAR(200) NOT NULL, " +
-                "staff_first_name VARCHAR(30), " +
-                "staff_last_name VARCHAR(30), " +
-                "staff_contact_no VARCHAR(12), " +
-                "staff_email VARCHAR(30) NOT NULL, " +
-                "category VARCHAR(30), " +
-                "profile_picture VARCHAR(255))");
+            createTableIfNotExists(connection, "STAFF",
+                    "CREATE TABLE Staff ("
+                    + "staff_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "staff_username VARCHAR(20) NOT NULL UNIQUE, "
+                    + "staff_password VARCHAR(200) NOT NULL, "
+                    + "staff_first_name VARCHAR(30), "
+                    + "staff_last_name VARCHAR(30), "
+                    + "staff_contact_no VARCHAR(12), "
+                    + "staff_email VARCHAR(30) NOT NULL, "
+                    + "category VARCHAR(30), "
+                    + "profile_picture VARCHAR(255))");
 
-            createTableIfNotExists(connection, "ITEM", 
-                "CREATE TABLE Item (" +
-                "item_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "item_name VARCHAR(50), " +
-                "item_price DECIMAL(16, 2), " +
-                "item_pict VARCHAR(255))");
+            createTableIfNotExists(connection, "ITEM",
+                    "CREATE TABLE Item ("
+                    + "item_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "item_name VARCHAR(50), "
+                    + "item_price DECIMAL(16, 2), "
+                    + "item_pict VARCHAR(255))");
 
-            createTableIfNotExists(connection, "ADDRESS", 
-                "CREATE TABLE Address (" +
-                "address_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "house_no VARCHAR(10), " +
-                "street_name VARCHAR(70), " +
-                "city VARCHAR(70), " +
-                "postcode VARCHAR(5), " +
-                "state VARCHAR(20), " +
-                "profile_picture VARCHAR(255), " +
-                "cust_ID INT, " +
-                "FOREIGN KEY (cust_ID) REFERENCES Customer(cust_ID))");
+            createTableIfNotExists(connection, "ADDRESS",
+                    "CREATE TABLE Address ("
+                    + "address_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "house_no VARCHAR(10), "
+                    + "street_name VARCHAR(70), "
+                    + "city VARCHAR(70), "
+                    + "postcode VARCHAR(5), "
+                    + "state VARCHAR(20), "
+                    + "profile_picture VARCHAR(255), "
+                    + "cust_ID INT, "
+                    + "FOREIGN KEY (cust_ID) REFERENCES Customer(cust_ID))");
 
-            createTableIfNotExists(connection, "BOOKING", 
-                "CREATE TABLE Booking (" +
-                "booking_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
-                "vehicle_type VARCHAR(12) NOT NULL, " +
-                "pickup_date DATE NOT NULL, " +
-                "pickup_time VARCHAR(30), " +
-                "deposit_receipt VARCHAR(255), " +
-                "deposit_status VARCHAR(15), " +
-                "book_status VARCHAR(15), " +
-                "cust_ID INT NOT NULL, " +
-                "address_id INT NOT NULL, " +
-                "FOREIGN KEY (cust_ID) REFERENCES Customer(cust_ID), " +
-                "FOREIGN KEY (address_id) REFERENCES Address(address_id))");
+            createTableIfNotExists(connection, "BOOKING",
+                    "CREATE TABLE Booking ("
+                    + "booking_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "vehicle_type VARCHAR(12) NOT NULL, "
+                    + "pickup_date DATE NOT NULL, "
+                    + "pickup_time VARCHAR(30), "
+                    + "deposit_receipt VARCHAR(255), "
+                    + "deposit_status VARCHAR(15), "
+                    + "book_status VARCHAR(15), "
+                    + "cust_ID INT NOT NULL, "
+                    + "address_id INT NOT NULL, "
+                    + "FOREIGN KEY (cust_ID) REFERENCES Customer(cust_ID), "
+                    + "FOREIGN KEY (address_id) REFERENCES Address(address_id))");
+
+            createTableIfNotExists(connection, "COLLECTION_RECORD",
+                    "CREATE TABLE Collection_Record ("
+                    + "collect_ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, "
+                    + "collect_weight DECIMAL(10, 2), "
+                    + "total_amount DECIMAL(16, 2), "
+                    + "collect_date DATE, "
+                    + "collect_time VARCHAR(30), "
+                    + "reward_status VARCHAR(20), "
+                    + "book_ID INT, "
+                    + "item_ID INT, "
+                    + "staff_ID INT, "
+                    + "FOREIGN KEY (book_ID) REFERENCES Booking(booking_id), "
+                    + "FOREIGN KEY (item_ID) REFERENCES Item(item_id), "
+                    + "FOREIGN KEY (staff_ID) REFERENCES Staff(staff_ID))");
 
             // Insert initial data into STAFF table
             insertStaffData(connection);
@@ -112,8 +127,8 @@ public class TableCreation {
     }
 
     private static void insertStaffData(Connection connection) throws SQLException {
-        String insertSQL = "INSERT INTO Staff (staff_username, staff_password, staff_first_name, staff_last_name, staff_contact_no, staff_email, category, profile_picture) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO Staff (staff_username, staff_password, staff_first_name, staff_last_name, staff_contact_no, staff_email, category, profile_picture) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(insertSQL)) {
             ps.setString(1, "staff01");
             ps.setString(2, "123");

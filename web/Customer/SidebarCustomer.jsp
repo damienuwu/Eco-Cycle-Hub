@@ -39,6 +39,12 @@
             </a>
         </li>
         <li class="mb-2">
+            <a href="CollectionRecords.jsp" class="text-decoration-none text-white d-flex align-items-center">
+                <span class="icon me-2"><i class='bx bx-user-circle'></i></span>
+                <span class="title">Collection Records</span>
+            </a>
+        </li>
+        <li class="mb-2">
             <a href="SidebarCustomer.jsp?action=logout" class="text-decoration-none text-white d-flex align-items-center">
                 <span class="icon me-2"><i class='bx bx-exit'></i></span>
                 <span class="title">Sign Out</span>
