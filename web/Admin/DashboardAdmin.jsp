@@ -54,7 +54,7 @@
 
                     <div class="card p-3 text-center mb-4 col-12 col-md-6 col-lg-4">
                         <div>
-                            <div class="numbers display-6">$7,842</div>
+                            <div class="numbers display-6">RM7,842</div>
                             <div class="cardName text-muted">Earnings</div>
                         </div>
                         <div class="iconBx">

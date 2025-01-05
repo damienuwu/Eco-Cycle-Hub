@@ -37,8 +37,9 @@
     <body>
         <div class="container-fluid d-flex p-0">
             <div id="sidebar"></div>
-            <main class="main flex-grow-1 p-4">       
+            <main class="main flex-grow-1 p-4">
                 <div id="topbar"></div>
+                
                 <div class="content mt-4">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
