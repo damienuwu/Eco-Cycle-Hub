@@ -49,21 +49,8 @@ body {
     height: auto;
 }
 
-/* Main content adjustments for collapsed sidebar */
-/*.main-content {
-    transition: margin-left 0.3s ease;
-    margin-left: 300px;  Default sidebar width 
-}*/
-
-/* When sidebar is collapsed, adjust content */
 .navigation.collapsed + .main {
     margin-left: 60px; /* Remove left margin when collapsed */
-}
-
-/* Sidebar content adjustment for collapsed state */
-.navigation {
-    width: 300px;
-    transition: width 0.3s ease;
 }
 
 .navigation.collapsed {
@@ -76,12 +63,7 @@ body {
 }
 
 .navigation.collapsed .title {
-    display: none; /* Hide sidebar text when collapsed */
-}
-
-/* Adjust sidebar links */
-.navigation .list-unstyled li {
-    padding-left: 15px;
+    display: none;
 }
 
 /* Smooth transition effect for avatar change text */

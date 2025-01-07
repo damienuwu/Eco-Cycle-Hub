@@ -7,6 +7,7 @@
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    String errorMessage = null;
 
     session = request.getSession(false);
     if (session == null || !Session.isValidCustomerSession(session, response)) {
@@ -46,7 +47,7 @@
             records.add(record);
         }
     } catch (SQLException e) {
-        out.println("<div class='alert alert-danger'>Error: " + e.getMessage() + "</div>");
+        errorMessage = "An error occurred: " + e.getMessage();
     } finally {
         if (rs != null) {
             try {
@@ -83,7 +84,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
         <link href="../css/SidebarCustomer.css" rel="stylesheet">
-        <link href="../css/items-1.css" rel="stylesheet">
+        <link href="../css/CollectionRecord.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
         <script src="../js/SidebarCustomer.js"></script>
         <script src="../js/Topbar.js"></script>
@@ -106,20 +107,29 @@
                 background-color: #dc3545;
                 color: white;
             }
+            .table th, .table td {
+                vertical-align: middle;
+            }
         </style>
     </head>
     <body>
         <div class="container-fluid d-flex p-0">
             <div id="sidebar"></div>
             <main class="main flex-grow-1 p-4">
+                <% if (errorMessage != null) {%>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error:</strong> <%= errorMessage%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
                 <div id="topbar"></div>
                 <div class="details mt-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="m-0">Collection Records</h2>
+                    <div class="itemlist shadow-sm p-4 bg-white rounded">
+                        <div class="tableHeader d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="section-title">Collection Records</h2>
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped table-bordered table-sm">
+                            <table class="table table-bordered table-striped table-sm">
                                 <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
@@ -135,9 +145,11 @@
                                 </thead>
                                 <tbody>
                                     <% if (records.isEmpty()) { %>
-                                    <tr><td colspan="9" class="text-center">No records available.</td></tr>
+                                    <tr>
+                                        <td colspan="10" class="text-center text-muted">No records available.</td>
+                                    </tr>
                                     <% } else {
-                                        for (CollectionRecord record : records) {%>
+                                    for (CollectionRecord record : records) {%>
                                     <tr>
                                         <td class="text-center"><%= record.getCollectId()%></td>
                                         <td class="text-center"><%= record.getCollectWeight()%></td>

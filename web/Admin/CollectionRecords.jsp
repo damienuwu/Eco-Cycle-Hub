@@ -10,6 +10,7 @@
     PreparedStatement ps = null;
     ResultSet rs = null;
     int staffId = -1; // Initialize staffId
+    String errorMessage = null;
 
     // Get staffId from session if available
     session = request.getSession(false);
@@ -62,7 +63,7 @@
             }
         }
     } catch (SQLException e) {
-        out.println("<div class='alert alert-danger'>Error: " + e.getMessage() + "</div>");
+        errorMessage = "An error occurred: " + e.getMessage();
     } finally {
         if (rs != null) {
             try {
@@ -100,7 +101,7 @@
         <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.5/dist/sweetalert2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/SidebarCustomer.css">
-        <link rel="stylesheet" href="../css/items-1.css">
+        <link rel="stylesheet" href="../css/CollectionRecord.css">
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
@@ -109,36 +110,26 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="../js/SidebarAdmin.js"></script>
         <script src="../js/Topbar.js"></script>
-        <style>
-            .reward-status .pending {
-                background-color: yellow;
-                color: black;
-            }
-
-            .reward-status .success {
-                background-color: green;
-                color: white;
-            }
-            
-            .reward-status {
-                padding: 3px 8px;
-                border-radius: 10px;
-            }
-        </style>
     </head>
     <body>
         <div class="container-fluid d-flex p-0">
             <div id="sidebar"></div>
             <main class="main flex-grow-1 p-4">
+                <% if (errorMessage != null) {%>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error:</strong> <%= errorMessage%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
                 <div id="topbar"></div>
                 <div class="details mt-4">
-                    <div class="itemlist">
-                        <div class="tableHeader d-flex justify-content-between align-items-center">
-                            <h2>Collection Records</h2>
-                            <button class="btn btn-success" onclick="openAddModal()">Add Record</button>
+                    <div class="itemlist shadow-sm p-4 bg-white rounded">
+                        <div class="tableHeader d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="section-title">Collection Records</h2>
+                            <button class="btn btn-primary" onclick="openAddModal()"><i class="bx bx-plus"></i> Add Record</button>
                         </div>
-                        <table class="table table-hover table-bordered">
-                            <thead>
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>ID</th>
                                     <th>Weight (kg)</th>
@@ -154,7 +145,9 @@
                             </thead>
                             <tbody>
                                 <% if (records.isEmpty()) { %>
-                                <tr><td colspan="10" class="text-center">No records available.</td></tr>
+                                <tr>
+                                    <td colspan="10" class="text-center text-muted">No records available.</td>
+                                </tr>
                                 <% } else {
                                     for (CollectionRecord record : records) {%>
                                 <tr>
@@ -176,7 +169,7 @@
                                     <td><%= record.getStaffName()%></td>
                                     <td><%= record.getItemName()%></td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteRecord(<%= record.getCollectId()%>)">Delete</button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteRecord(<%= record.getCollectId()%>)"><i class="bx bx-trash"></i> Delete</button>
                                     </td>
                                 </tr>
                                 <% }
@@ -185,205 +178,205 @@
                         </table>
                     </div>
 
-                    <!-- Add Collection Modal -->
-                    <div id="AddModal" class="modal fade" tabindex="-1" aria-labelledby="AddModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="AddModalLabel">Add Collection Record</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="AddForm" action="../AddCollectionServlet" method="post">
-                                        <!-- Form fields for adding collection record -->
-                                        <div class="mb-3">
-                                            <label for="weight" class="form-label">Weight (kg)</label>
-                                            <input type="number" step="0.01" class="form-control" id="weight" name="weight" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="totalAmount" class="form-label">Total Amount (RM)</label>
-                                            <input type="number" step="0.01" class="form-control" id="totalAmount" name="totalAmount" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="collectDate" class="form-label">Date</label>
-                                            <input type="date" class="form-control" id="collectDate" name="collectDate" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="collectTime" class="form-label">Time</label>
-                                            <input type="time" class="form-control" id="collectTime" name="collectTime" required>
-                                        </div>
-                                        <!-- Item Dropdown -->
-                                        <div class="mb-3">
-                                            <label for="itemId" class="form-label">Select Item</label>
-                                            <select class="form-select" id="itemId" name="itemId" required>
-                                                <%
-                                                    // Loop through the map entries (key: item_id, value: item_name)
-                                                    for (Map.Entry<Integer, String> entry : items.entrySet()) {
-                                                %>
-                                                <option value="<%= entry.getKey()%>"><%= entry.getValue()%></option>
-                                                <%
-                                                    }
-                                                %>
-                                            </select>
-                                        </div>
+                <!-- Add Collection Modal -->
+                <div id="AddModal" class="modal fade" tabindex="-1" aria-labelledby="AddModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="AddModalLabel">Add Collection Record</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="AddForm" action="../AddCollectionServlet" method="post">
+                                    <!-- Form fields for adding collection record -->
+                                    <div class="mb-3">
+                                        <label for="weight" class="form-label">Weight (kg)</label>
+                                        <input type="number" step="0.01" class="form-control" id="weight" name="weight" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="totalAmount" class="form-label">Total Amount (RM)</label>
+                                        <input type="number" step="0.01" class="form-control" id="totalAmount" name="totalAmount" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="collectDate" class="form-label">Date</label>
+                                        <input type="date" class="form-control" id="collectDate" name="collectDate" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="collectTime" class="form-label">Time</label>
+                                        <input type="time" class="form-control" id="collectTime" name="collectTime" required>
+                                    </div>
+                                    <!-- Item Dropdown -->
+                                    <div class="mb-3">
+                                        <label for="itemId" class="form-label">Select Item</label>
+                                        <select class="form-select" id="itemId" name="itemId" required>
+                                            <%
+                                                // Loop through the map entries (key: item_id, value: item_name)
+                                                for (Map.Entry<Integer, String> entry : items.entrySet()) {
+                                            %>
+                                            <option value="<%= entry.getKey()%>"><%= entry.getValue()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
 
-                                        <!-- Book Dropdown -->
-                                        <div class="mb-3">
-                                            <label for="bookId" class="form-label">Select Booking ID</label>
-                                            <select class="form-select" id="bookId" name="bookId" required>
-                                                <% for (String book : books) {%>
-                                                <option value="<%= book%>"><%= book%></option>
-                                                <% }%>
-                                            </select>
-                                        </div>
-                                        <!-- Hidden staff ID field -->
-                                        <input type="hidden" name="staffId" value="<%= staffId%>">
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-success">Add Record</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <!-- Book Dropdown -->
+                                    <div class="mb-3">
+                                        <label for="bookId" class="form-label">Select Booking ID</label>
+                                        <select class="form-select" id="bookId" name="bookId" required>
+                                            <% for (String book : books) {%>
+                                            <option value="<%= book%>"><%= book%></option>
+                                            <% }%>
+                                        </select>
+                                    </div>
+                                    <!-- Hidden staff ID field -->
+                                    <input type="hidden" name="staffId" value="<%= staffId%>">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success">Add Record</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- End Add Collection Modal -->
                 </div>
-            </main>
+                <!-- End Add Collection Modal -->
         </div>
+    </main>
+</div>
 
-        <script>
-            function openAddModal() {
-                new bootstrap.Modal(document.getElementById('AddModal')).show();
-            }
+<script>
+    function openAddModal() {
+        new bootstrap.Modal(document.getElementById('AddModal')).show();
+    }
 
-            document.getElementById('AddForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-                const formData = new FormData(this);
+    document.getElementById('AddForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
 
-                fetch('../AddCollectionServlet', {
-                    method: 'POST',
-                    body: formData
-                })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Record Added!',
-                                    text: 'The collection record has been successfully added.',
-                                }).then(() => {
-                                    location.reload();  // Reload to show updated records
-                                });
-                            } else {
-                                alert(data.message);
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-            });
-
-            function deleteRecord(recordId) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You won\'t be able to undo this action!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Create form data to send to the servlet
-                        const formData = new FormData();
-                        formData.append("collectId", recordId);
-
-                        fetch('../DeleteCollectionServlet', {
-                            method: 'POST',
-                            body: formData
-                        })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.status === 'success') {
-                                        Swal.fire('Deleted!', 'The record has been deleted.', 'success')
-                                                .then(() => location.reload());  // Reload to show updated records
-                                    } else {
-                                        Swal.fire('Error!', 'The record could not be deleted.', 'error');
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
-                    }
-                });
-            }
-
-            function updateRewardStatus(recordId, status) {
-                fetch('../UpdateRewardStatusServlet', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        collectId: recordId,
-                        rewardStatus: status
-                    })
-                })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Reward Status Updated!',
-                                    text: data.message
-                                }).then(() => {
-                                    // Redirect to the provided URL from the server response
-                                    if (data.redirectUrl) {
-                                        location.reload();  // Reload the page to show updated records
-                                    }
-                                });
-                            } else {
-                                Swal.fire('Error', 'Unable to update reward status.', 'error');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-            }
-
-
-            document.querySelector('form[action="../UpdateRewardStatusServlet"]').addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent traditional form submission
-
-                const formData = new FormData(this);
-
-                fetch('../UpdateRewardStatusServlet', {
-                    method: 'POST',
-                    body: formData
-                })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: data.message, // Display the success message
-                                    text: 'The reward status has been updated successfully.'
-                                }).then(() => {
-                                    // Redirect to the CollectionRecords.jsp page
-                                    window.location.href = data.redirectUrl;
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: data.message  // Show the error message if failed
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Network Error',
-                                text: 'There was an issue updating the reward status.'
-                            });
+        fetch('../AddCollectionServlet', {
+            method: 'POST',
+            body: formData
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Record Added!',
+                            text: 'The collection record has been successfully added.',
+                        }).then(() => {
+                            location.reload();  // Reload to show updated records
                         });
-            });
-            
-        </script>
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+    });
 
-    </body>
+    function deleteRecord(recordId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to undo this action!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Create form data to send to the servlet
+                const formData = new FormData();
+                formData.append("collectId", recordId);
+
+                fetch('../DeleteCollectionServlet', {
+                    method: 'POST',
+                    body: formData
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire('Deleted!', 'The record has been deleted.', 'success')
+                                        .then(() => location.reload());  // Reload to show updated records
+                            } else {
+                                Swal.fire('Error!', 'The record could not be deleted.', 'error');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+            }
+        });
+    }
+
+    function updateRewardStatus(recordId, status) {
+        fetch('../UpdateRewardStatusServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                collectId: recordId,
+                rewardStatus: status
+            })
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Reward Status Updated!',
+                            text: data.message
+                        }).then(() => {
+                            // Redirect to the provided URL from the server response
+                            if (data.redirectUrl) {
+                                location.reload();  // Reload the page to show updated records
+                            }
+                        });
+                    } else {
+                        Swal.fire('Error', 'Unable to update reward status.', 'error');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+    }
+
+
+    document.querySelector('form[action="../UpdateRewardStatusServlet"]').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent traditional form submission
+
+        const formData = new FormData(this);
+
+        fetch('../UpdateRewardStatusServlet', {
+            method: 'POST',
+            body: formData
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.message, // Display the success message
+                            text: 'The reward status has been updated successfully.'
+                        }).then(() => {
+                            // Redirect to the CollectionRecords.jsp page
+                            window.location.href = data.redirectUrl;
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message  // Show the error message if failed
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error',
+                        text: 'There was an issue updating the reward status.'
+                    });
+                });
+    });
+
+</script>
+
+</body>
 </html>
