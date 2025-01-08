@@ -61,14 +61,26 @@ body {
 }
 
 .recentOrders, .recentCustomers {
+
     background: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .recentOrders h2, .recentCustomers h2 {
     margin-bottom: 15px;
+}
+
+.recentOrders table, .recentCustomers table {
+    margin-top: 15px;
+}
+
+.imgBx img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .status {
