@@ -139,10 +139,13 @@
                             <!-- Profile Picture -->
                             <div class="text-center mb-4">
                                 <div class="position-relative d-inline-block">
-                                    <img id="avatar" 
-                                         src="<%= profilePicPath != null ? "../" + profilePicPath.substring(1) : "../uploads/default.png"%>"
-                                         alt="Avatar" 
-                                         class="rounded-circle img-fluid avatar">
+                                    <%
+                                        String profileImagePath = "../uploads/default.png"; // Default path
+                                        if (profilePicPath != null && !profilePicPath.isEmpty() && profilePicPath.length() > 1) {
+                                            profileImagePath = "../" + profilePicPath.substring(1);
+                                        }
+                                    %>
+                                    <img id="avatar" src="<%= profileImagePath %>" alt="Avatar" class="rounded-circle img-fluid avatar">
                                     <span class="badge bg-primary text-white change-avatar" onclick="document.getElementById('file-input').click();">Change</span>
                                     <input type="file" id="file-input" name="avatar" style="display:none;" accept="image/*" onchange="previewImage(event)">
                                 </div>
@@ -628,7 +631,7 @@
             });
 
             setTimeout(() => {
-                this.submit(); 
+                this.submit();
             }, 1000);
         });
     });
