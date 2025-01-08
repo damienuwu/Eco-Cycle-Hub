@@ -31,7 +31,7 @@ public class AdminProfileServlet extends HttpServlet {
         if (filePart != null && filePart.getSize() > 0) {
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-            String uploadPath = "C:\\Users\\user\\Documents\\NetBeansProjects\\EcoCycleHub\\web\\uploads";
+            String uploadPath = "C:\\Users\\user\\Documents\\NetBeansProjects\\Eco-Cycle-Hub\\web\\uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();

@@ -76,7 +76,7 @@
                                     <td><%= itemId%></td>
                                     <td><%= itemName%></td>
                                     <td>RM <%= itemPrice%></td>
-                                    <td><img src="../itemImage/<%= itemPicture%>" alt="Item Picture" class="img-thumbnail" width="50"></td>
+                                    <td><img src="<%= itemPicture%>" alt="Item Picture" class="img-thumbnail" width="50"></td>
                                     <td>
                                         <a class="btn btn-warning" 
                                            onclick="openEditForm('<%= itemId%>', '<%= itemName%>', '<%= itemPrice%>', '<%= itemPicture%>')">
@@ -250,7 +250,17 @@
                         confirmButtonText: 'OK',
                         confirmButtonColor: '#3085d6'
                     }).then(() => {
-                        window.location.href = response.redirectUrl;
+                        Swal.fire({
+                            title: 'Please Wait',
+                            text: 'Redirecting in 1 seconds...',
+                            icon: 'info',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            background: '#f8f9fa'
+                        });
+                        setTimeout(() => {
+                            window.location.href = response.redirectUrl;
+                        }, 1000);
                     });
                 } else if (response.status === 'error') {
                     Swal.fire({
@@ -308,7 +318,17 @@
                                         background: '#f8f9fa'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            window.location.href = data.redirectUrl;
+                                            Swal.fire({
+                                                title: 'Please Wait',
+                                                text: 'Redirecting in 1 seconds...',
+                                                icon: 'info',
+                                                showConfirmButton: false,
+                                                timer: 1000,
+                                                background: '#f8f9fa'
+                                            });
+                                            setTimeout(() => {
+                                                window.location.href = data.redirectUrl;
+                                            }, 1000);
                                         }
                                     });
                                 } else {

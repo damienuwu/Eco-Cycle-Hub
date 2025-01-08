@@ -109,7 +109,9 @@
         <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/Profile.css">
         <link rel="stylesheet" href="../css/SidebarCustomer.css">
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.28/dist/sweetalert2.min.css" rel="stylesheet">
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
         <script src="../js/SidebarCustomer.js"></script>
         <script src="../js/Topbar.js"></script>
@@ -133,7 +135,7 @@
                     </div>
                     <div class="card-body">
 
-                        <form action="../UpdateProfileServlet" method="post" enctype="multipart/form-data">
+                        <form id="updateProfileForm" action="../UpdateProfileServlet" method="post" enctype="multipart/form-data">
                             <!-- Profile Picture -->
                             <div class="text-center mb-4">
                                 <div class="position-relative d-inline-block">
@@ -610,6 +612,26 @@
             reader.readAsDataURL(file);
         }
     }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('updateProfileForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Processing...',
+                text: 'Please wait a moment.',
+                icon: 'info',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                timer: 1000,
+            });
+
+            setTimeout(() => {
+                this.submit(); 
+            }, 1000);
+        });
+    });
 </script>
 </body>
 </html>

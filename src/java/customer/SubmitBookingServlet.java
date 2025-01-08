@@ -41,7 +41,7 @@ public class SubmitBookingServlet extends HttpServlet {
         String depositReceipt = null;
         if (filePart != null) {
             String fileName = Paths.get(filePart.getSubmittedFileName()).toString();
-            String uploadPath = "C:\\Users\\user\\Documents\\NetBeansProjects\\EcoCycleHub\\web\\payment";
+            String uploadPath = "C:\\Users\\user\\Documents\\NetBeansProjects\\Eco-Cycle-Hub\\web\\payment";
 
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
