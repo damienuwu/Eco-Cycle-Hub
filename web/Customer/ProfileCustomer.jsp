@@ -627,7 +627,7 @@
                 icon: 'info',
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                timer: 1000,
+                timer: 2000,
             });
 
             setTimeout(() => {
