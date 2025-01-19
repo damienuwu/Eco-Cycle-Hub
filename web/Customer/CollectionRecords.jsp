@@ -41,8 +41,8 @@
                     rs.getInt("book_id"),
                     rs.getInt("item_id"),
                     rs.getInt("staff_id"),
-                    rs.getString("item_name"),
-                    rs.getString("staff_username")
+                    rs.getString("staff_username"),
+                    rs.getString("item_name")
             );
             records.add(record);
         }
@@ -110,6 +110,9 @@
             .table th, .table td {
                 vertical-align: middle;
             }
+            .table-bordered {
+                border-bottom: 1px solid #dee2e6 !important;
+            }
         </style>
     </head>
     <body>
@@ -149,7 +152,7 @@
                                         <td colspan="10" class="text-center text-muted">No records available.</td>
                                     </tr>
                                     <% } else {
-                                    for (CollectionRecord record : records) {%>
+                                        for (CollectionRecord record : records) {%>
                                     <tr>
                                         <td class="text-center"><%= record.getCollectId()%></td>
                                         <td class="text-center"><%= record.getCollectWeight()%></td>

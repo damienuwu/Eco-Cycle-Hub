@@ -148,6 +148,16 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="../js/SidebarAdmin.js"></script>
         <script src="../js/Topbar.js"></script>
+
+        <style>
+            .table-bordered {
+                border: 1px solid #dee2e6;
+            }
+
+            .table-bordered tbody tr:last-child {
+                border-bottom: 1px solid #dee2e6;
+            }
+        </style>
     </head>
     <body>
         <div class="container-fluid d-flex p-0">
@@ -200,8 +210,8 @@
                                             <option value="Success" class="success" <%= record.getRewardStatus().equals("Success") ? "selected" : ""%>>Success</option>
                                         </select>
                                     </td>
-
-
+                                    
+                                    
 
                                     <td><%= record.getBookId()%></td>
                                     <td><%= record.getStaffName()%></td>
@@ -211,7 +221,7 @@
                                     </td>
                                 </tr>
                                 <% }
-                                    }%>
+                                    } %>
                             </tbody>
                         </table>
                     </div>
