@@ -632,7 +632,7 @@
 
             setTimeout(() => {
                 this.submit();
-            }, 1000);
+            }, 2000);
         });
     });
 </script>
