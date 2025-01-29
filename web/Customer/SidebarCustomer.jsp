@@ -33,15 +33,15 @@
             </a>
         </li>
         <li class="mb-2">
-            <a href="ProfileCustomer.jsp" class="text-decoration-none text-white d-flex align-items-center">
-                <span class="icon me-2"><i class='bx bx-user-circle'></i></span>
-                <span class="title">Profile</span>
-            </a>
-        </li>
-        <li class="mb-2">
             <a href="CollectionRecords.jsp" class="text-decoration-none text-white d-flex align-items-center">
                 <span class="icon me-2"><i class='bx bx-user-circle'></i></span>
                 <span class="title">Collection Records</span>
+            </a>
+        </li>
+        <li class="mb-2">
+            <a href="ProfileCustomer.jsp" class="text-decoration-none text-white d-flex align-items-center">
+                <span class="icon me-2"><i class='bx bx-user-circle'></i></span>
+                <span class="title">Profile</span>
             </a>
         </li>
         <li class="mb-2">
