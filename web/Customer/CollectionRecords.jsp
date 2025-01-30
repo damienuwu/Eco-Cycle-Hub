@@ -25,9 +25,11 @@
                 + "LEFT JOIN item i ON cr.item_id = i.item_id "
                 + "LEFT JOIN booking b ON cr.book_id = b.booking_ID "
                 + "LEFT JOIN staff s ON cr.staff_id = s.staff_id "
+                + "WHERE b.cust_id = ? "
                 + "ORDER BY CR.COLLECT_ID DESC ";
 
         ps = conn.prepareStatement(sql);
+        ps.setInt(1, custID);
         rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -47,7 +49,7 @@
             records.add(record);
         }
     } catch (SQLException e) {
-        errorMessage = "An error occurred: " + e.getMessage();
+        e.printStackTrace();
     } finally {
         if (rs != null) {
             try {
@@ -154,19 +156,19 @@
                                     <% } else {
                                         for (CollectionRecord record : records) {%>
                                     <tr>
-                                        <td class="text-center"><%= record.getCollectId()%></td>
-                                        <td class="text-center"><%= record.getCollectWeight()%></td>
-                                        <td class="text-center">RM <%= record.getTotalAmount()%></td>
-                                        <td class="text-center"><%= record.getCollectDate()%></td>
-                                        <td class="text-center"><%= record.getCollectTime()%></td>
-                                        <td class="text-center">
+                                        <td class="text-center py-3"><%= record.getCollectId()%></td> <!-- Added py-3 for padding -->
+                                        <td class="text-center py-3"><%= record.getCollectWeight()%></td>
+                                        <td class="text-center py-3">RM <%= record.getTotalAmount()%></td>
+                                        <td class="text-center py-3"><%= record.getCollectDate()%></td>
+                                        <td class="text-center py-3"><%= record.getCollectTime()%></td>
+                                        <td class="text-center py-3">
                                             <span class="reward-status <%= record.getRewardStatus().equalsIgnoreCase("pending") ? "pending" : record.getRewardStatus().equalsIgnoreCase("success") ? "success" : "failed"%>">
                                                 <%= record.getRewardStatus()%>
                                             </span>
                                         </td>
-                                        <td class="text-center"><%= record.getBookId()%></td>
-                                        <td class="text-center"><%= record.getItemName()%></td>
-                                        <td class="text-center"><%= record.getStaffName()%></td>
+                                        <td class="text-center py-3"><%= record.getBookId()%></td>
+                                        <td class="text-center py-3"><%= record.getItemName()%></td>
+                                        <td class="text-center py-3"><%= record.getStaffName()%></td>
                                     </tr>
                                     <% }
                                         }%>

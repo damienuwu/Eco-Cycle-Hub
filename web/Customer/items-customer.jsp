@@ -1,52 +1,14 @@
-<%@ page import="java.sql.*, javax.servlet.*, javax.servlet.http.*, java.io.*" %>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
-<%@ page import="user.Session" %>
+<%@ page import="items.item" %>
+<%@ page import="items.itemDAO" %>
+<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<jsp:useBean id="itemDAO" class="items.itemDAO"/>
 
 <%
-    session = request.getSession(false);
-    if (session == null || !Session.isValidCustomerSession(session, response)) {
-        return;
-    }
-    int custID = Session.getCustID(session);
-
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-
-    List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
-
-    try {
-        conn = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app");
-
-        String sql = "SELECT item_name, item_price, item_pict FROM item";
-        stmt = conn.prepareStatement(sql);
-        rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            item.put("name", rs.getString("item_name"));
-            item.put("price", rs.getDouble("item_price"));
-            item.put("pict", rs.getString("item_pict"));
-            items.add(item);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    List<item> itemList = itemDAO.getAllItems();
+    request.setAttribute("itemList", itemList);
 %>
 
 <!DOCTYPE html>
@@ -66,7 +28,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../js/SidebarCustomer.js"></script>
         <script src="../js/Topbar.js"></script>
-
     </head>
     <body>
         <div class="container-fluid d-flex p-0">
@@ -81,18 +42,13 @@
                         <p>These are the items that we accept:</p>
                     </div>
                     <div class="items-grid">
-                        <%
-                            for (Map<String, Object> item : items) {
-                                String itemName = (String) item.get("name");
-                                Double itemPrice = (Double) item.get("price");
-                                String itemPict = (String) item.get("pict");
-                        %>
-                        <div class="item-card">
-                            <img src="<%= itemPict%>" alt="<%= itemName%>">
-                            <h3><%= itemName%></h3>
-                            <p>RM <%= String.format("%.2f", itemPrice)%>/KG</p>
-                        </div>
-                        <%}%>
+                        <c:forEach var="item" items="${itemList}">
+                            <div class="item-card">
+                                <img src="${item.itemPict}" alt="${item.itemName}">
+                                <h3>${item.itemName}</h3>
+                                <p>RM <fmt:formatNumber value="${item.itemPrice}" maxFractionDigits="2" minFractionDigits="2" /></p>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </main>

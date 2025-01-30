@@ -40,6 +40,18 @@
         <servlet-name>TableCreation</servlet-name>
         <servlet-class>user.TableCreation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddCollectionServlet</servlet-name>
+        <servlet-class>admin.AddCollectionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCollectionServlet</servlet-name>
+        <servlet-class>admin.DeleteCollectionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRewardStatusServlet</servlet-name>
+        <servlet-class>admin.UpdateRewardStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddItemServlet</servlet-name>
         <url-pattern>/AddItemServlet</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>TableCreation</servlet-name>
         <url-pattern>/TableCreation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCollectionServlet</servlet-name>
+        <url-pattern>/AddCollectionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCollectionServlet</servlet-name>
+        <url-pattern>/DeleteCollectionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRewardStatusServlet</servlet-name>
+        <url-pattern>/UpdateRewardStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
