@@ -27,16 +27,17 @@
     try {
         // Connect to the database
         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app");
-
-        // Fetch rewards and total amount for bookings
         String query = "SELECT "
-                + "SUM(c.TOTAL_AMOUNT) AS total_amount, "
-                + "COUNT(c.book_ID) AS rewards, "
-                + "b.booking_ID, b.pickup_date, b.pickup_time, b.book_status "
-                + "FROM collection_record c "
-                + "JOIN Booking b ON c.book_ID = b.booking_ID "
-                + "GROUP BY b.booking_ID, b.pickup_date, b.pickup_time, b.book_status "
-                + "ORDER BY b.pickup_date DESC, b.pickup_time DESC FETCH FIRST 5 ROWS ONLY";
+                + "b.booking_ID, "
+                + "b.pickup_date, "
+                + "b.pickup_time, "
+                + "b.book_status, "
+                + "(SELECT SUM(c.TOTAL_AMOUNT) FROM collection_record c) AS total_amount, "
+                + "(SELECT COUNT(c.book_ID) FROM collection_record c) AS rewards "
+                + "FROM Booking b "
+                + "JOIN collection_record c ON b.booking_ID = c.book_ID "
+                + "ORDER BY b.pickup_date DESC, b.pickup_time DESC "
+                + "FETCH FIRST 5 ROWS ONLY";
 
         pstmt = connection.prepareStatement(query);
         rs = pstmt.executeQuery();
