@@ -1,11 +1,20 @@
-package admin;
+package items;
+
+import items.item;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import java.io.*;
-import javax.servlet.*;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
-import java.sql.*;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @MultipartConfig
 public class AddItemServlet extends HttpServlet {
@@ -35,7 +44,8 @@ public class AddItemServlet extends HttpServlet {
             }
 
             File file = new File(uploadPath + File.separator + fileName);
-            try (InputStream fileContent = filePart.getInputStream(); FileOutputStream outputStream = new FileOutputStream(file)) {
+            try (InputStream fileContent = filePart.getInputStream();
+                    FileOutputStream outputStream = new FileOutputStream(file)) {
                 byte[] buffer = new byte[4096];
                 int bytesRead;
                 while ((bytesRead = fileContent.read(buffer)) != -1) {
@@ -46,7 +56,7 @@ public class AddItemServlet extends HttpServlet {
             filePath = "../itemImage/" + fileName;
         }
 
-        double price = 0.0;
+        double price;
         try {
             price = Double.parseDouble(String.format("%.2f", Double.parseDouble(itemPrice.trim())));
         } catch (NumberFormatException e) {
@@ -56,25 +66,17 @@ public class AddItemServlet extends HttpServlet {
             return;
         }
 
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app");
-            String sql = "INSERT INTO item (item_name, item_price, item_pict) VALUES (?, ?, ?)";
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, itemName);
-                statement.setDouble(2, price);
-                statement.setString(3, filePath);
+        item items = new item();
+        items.setItemName(itemName);
+        items.setItemPrice(price);
+        items.setItemPict(filePath);
 
-                int rowsInserted = statement.executeUpdate();
-                if (rowsInserted > 0) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"status\": \"success\", \"redirectUrl\": \"items-1.jsp\"}");
-                } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"status\": \"error\"}");
-                }
-            }
+        itemDAO itemDAO = new itemDAO();
+        try {
+            itemDAO.addItem(items);  // Call to save item to database
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\": \"success\", \"redirectUrl\": \"items-1.jsp\"}");
         } catch (SQLException e) {
             e.printStackTrace();
             response.setContentType("application/json");

@@ -3,12 +3,23 @@
 <%@ page import="user.Session" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="java.util.List" %>
+<%@ page import="items.itemDAO" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="items.item" %>
+<jsp:useBean id="item" class="items.item" scope="request" />
+
 <%
     session = request.getSession(false);
     if (session == null || !Session.isValidStaffSession(session, response)) {
         return;
     }
     int staffID = Session.getStaffID(session);
+
+    itemDAO dao = new itemDAO();
+    List<item> itemList = dao.getAllItems();
+    request.setAttribute("itemList", itemList);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,60 +66,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%
-                                    Connection conn = null;
-                                    PreparedStatement ps = null;
-                                    ResultSet rs = null;
-
-                                    try {
-                                        conn = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app");
-                                        String query = "SELECT item_id, item_name, item_price, item_pict FROM item";
-                                        ps = conn.prepareStatement(query);
-                                        rs = ps.executeQuery();
-
-                                        while (rs.next()) {
-                                            String itemId = rs.getString("item_id");
-                                            String itemName = rs.getString("item_name");
-                                            String itemPrice = rs.getString("item_price");
-                                            String itemPicture = rs.getString("item_pict");
-                                %>
-                                <tr>
-                                    <td><%= itemId%></td>
-                                    <td><%= itemName%></td>
-                                    <td>RM <%= itemPrice%></td>
-                                    <td><img src="<%= itemPicture%>" alt="Item Picture" class="img-thumbnail" width="50"></td>
-                                    <td>
-                                        <a class="btn btn-warning" 
-                                           onclick="openEditForm('<%= itemId%>', '<%= itemName%>', '<%= itemPrice%>', '<%= itemPicture%>')">
-                                            <i class="bx bxs-edit"></i>
-                                        </a>
-                                    </td>
+                                <c:forEach var="item" items="${itemList}">
+                                    <tr>
+                                        <td>${item.itemId}</td>
+                                        <td>${item.itemName}</td>
+                                        <td>RM <fmt:formatNumber value="${item.itemPrice}" pattern="##0.00" /></td>
+                                <td>
+                                    <img src="${item.itemPict}" alt="Item Picture" class="img-thumbnail" width="50">
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning"
+                                       onclick="openEditForm('${item.itemId}', '${item.itemName}', '${item.itemPrice}', '${item.itemPict}')">
+                                        <i class="bx bxs-edit"></i>
+                                    </a>
+                                </td>
                                 </tr>
-                                <%
-                                        }
-                                    } catch (Exception e) {
-                                        out.println("<tr><td colspan='5'>Error: " + e.getMessage() + "</td></tr>");
-                                    } finally {
-                                        if (rs != null) {
-                                            try {
-                                                rs.close();
-                                            } catch (SQLException ignore) {
-                                            }
-                                        }
-                                        if (ps != null) {
-                                            try {
-                                                ps.close();
-                                            } catch (SQLException ignore) {
-                                            }
-                                        }
-                                        if (conn != null) {
-                                            try {
-                                                conn.close();
-                                            } catch (SQLException ignore) {
-                                            }
-                                        }
-                                    }
-                                %>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -123,26 +96,26 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="../EditItemServlet" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="currentitempict" id="currentitempict" value="">
+                                        <input type="hidden" name="currentitempict" id="currentitempict" value=<jsp:getProperty name="item" property="itemPict" />">
 
-                                        <h4 class="mb-4 text-center text-muted">Edit Item Information</h4>
+                                               <h4 class="mb-4 text-center text-muted">Edit Item Information</h4>
 
                                         <div class="mb-4">
                                             <label for="itemid" class="form-label text-dark">Item ID</label>
-                                            <input type="text" id="itemid" name="itemid" class="form-control form-control-lg" readonly>
+                                            <input type="text" id="itemid" name="itemid" class="form-control form-control-lg" readonly value="<jsp:getProperty name="item" property="itemId" />">
                                         </div>
                                         <div class="mb-4">
                                             <label for="itemname" class="form-label text-dark">Item Name</label>
-                                            <input type="text" id="itemname" name="itemname" class="form-control form-control-lg" required>
+                                            <input type="text" id="itemname" name="itemname" class="form-control form-control-lg" value="<jsp:getProperty name="item" property="itemName" />" required>
                                         </div>
                                         <div class="mb-4">
                                             <label for="itemprice" class="form-label text-dark">Item Price (RM)</label>
-                                            <input type="text" id="itemprice" name="itemprice" class="form-control form-control-lg" required>
+                                            <input type="text" id="itemprice" name="itemprice" class="form-control form-control-lg" value="<jsp:getProperty name="item" property="itemPrice" />" required>
                                         </div>
                                         <div class="mb-4">
                                             <label for="itempicture" class="form-label text-dark">Item Picture</label>
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <img id="itempicture" width="100" alt="Item Picture" class="rounded-3 shadow-sm mb-3" onclick="document.getElementById('uploadImage').click()">
+                                                <img id="itempicture" width="100" alt="Item Picture" class="rounded-3 shadow-sm mb-3" src="<jsp:getProperty name="item" property="itemPict" />" onclick="document.getElementById('uploadImage').click()">
                                                 <button type="button" class="btn btn-primary btn-sm ms-3" onclick="document.getElementById('uploadImage').click()">Change</button>
                                                 <input name="uploadImage" type="file" id="uploadImage" class="form-control form-control-sm ms-3" onchange="previewImage(event)" accept="image/*" style="display: none;">
                                                 <button type="button" class="btn btn-danger btn-sm ms-3" onclick="removeImage()">Remove Image</button>

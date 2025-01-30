@@ -1,4 +1,4 @@
-package customer;
+package booking;
 
 import java.io.*;
 import javax.servlet.*;
@@ -10,6 +10,13 @@ import user.Session;
 
 @MultipartConfig
 public class SubmitBookingServlet extends HttpServlet {
+
+    private BookingDAO bookingDAO;
+
+    @Override
+    public void init() throws ServletException {
+        bookingDAO = new BookingDAO();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,39 +66,25 @@ public class SubmitBookingServlet extends HttpServlet {
             depositReceipt = "../payment/" + fileName;
         }
 
-        String depositStatus = "Pending";
-        String bookStatus = "Pending";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app")) {
-            String sql = "INSERT INTO Booking (vehicle_type, pickup_date, pickup_time, deposit_receipt, deposit_status, book_status, cust_ID, address_id) "
-                    + "VALUES (?, CURRENT_DATE, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, vehicleType);
-                ps.setString(2, pickupTime);
-                ps.setString(3, depositReceipt);
-                ps.setString(4, depositStatus);
-                ps.setString(5, bookStatus);
-                ps.setInt(6, custID);
-                ps.setInt(7, addressID);
-
-                int rowsAffected = ps.executeUpdate();
-                if (rowsAffected > 0) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"status\": \"success\", \"message\": \"Booking successfully created.\", \"redirectUrl\": \"DashboardCustomer.jsp\"}");
-                    return;
-                } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("{\"status\": \"error\", \"message\": \"An error occurred. Please try again later.\"}");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.getWriter().write("{\"status\": \"error\", \"message\": \"Database error: " + e.getMessage() + "\", \"details\": \"" + e.toString() + "\"}");
-            }
+        Booking booking = new Booking();
+        booking.setVehicleType(vehicleType);
+        booking.setPickupTime(pickupTime);
+        booking.setDepositReceipt(depositReceipt);
+        booking.setDepositStatus("Pending");
+        booking.setBookStatus("Pending");
+        booking.setCustId(custID);
+        booking.setAddressId(addressID);
+        
+        try {
+            bookingDAO.createBooking(booking);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\": \"success\", \"message\": \"Booking successfully created.\", \"redirectUrl\": \"DashboardCustomer.jsp\"}");
         } catch (SQLException e) {
             e.printStackTrace();
-            response.getWriter().write("{\"status\": \"error\", \"message\": \"Database connection error: " + e.getMessage() + "\"}");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\": \"error\", \"message\": \"Database error: " + e.getMessage() + "\", \"details\": \"" + e.toString() + "\"}");
         }
     }
 }

@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>AddItemServlet</servlet-name>
-        <servlet-class>admin.AddItemServlet</servlet-class>
+        <servlet-class>items.AddItemServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditItemServlet</servlet-name>
-        <servlet-class>admin.EditItemServlet</servlet-class>
+        <servlet-class>items.EditItemServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -30,7 +30,7 @@
     </servlet>
     <servlet>
         <servlet-name>SubmitBookingServlet</servlet-name>
-        <servlet-class>customer.SubmitBookingServlet</servlet-class>
+        <servlet-class>booking.SubmitBookingServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminProfileServlet</servlet-name>
@@ -51,6 +51,14 @@
     <servlet>
         <servlet-name>UpdateRewardStatusServlet</servlet-name>
         <servlet-class>admin.UpdateRewardStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>displayItemServlet</servlet-name>
+        <servlet-class>items.displayItemServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>booking.BookingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddItemServlet</servlet-name>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>UpdateRewardStatusServlet</servlet-name>
         <url-pattern>/UpdateRewardStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>displayItemServlet</servlet-name>
+        <url-pattern>/Admin/items</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/Customer/BookingServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

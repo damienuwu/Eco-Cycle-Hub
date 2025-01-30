@@ -29,7 +29,7 @@
             </a>
         </li>
         <li class="mb-2">
-            <a href="items-1.jsp" class="text-decoration-none text-white d-flex align-items-center">
+            <a href="../Admin/items" class="text-decoration-none text-white d-flex align-items-center">
                 <span class="icon me-2"><i class='bx bxl-spring-boot'></i></span>
                 <span class="title">Items</span>
             </a>
