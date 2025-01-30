@@ -1,5 +1,5 @@
 <%@ page import="user.Session" %>
-<%@ page import="admin.CollectionRecord" %>
+<%@ page import="collectionRecord.CollectionRecord" %>
 <%@ page import="java.sql.*, java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -20,13 +20,14 @@
 
         String sql = "SELECT cr.collect_id, cr.collect_weight, cr.total_amount, cr.collect_date, cr.collect_time, "
                 + "cr.reward_status, cr.book_id, cr.item_id, cr.staff_id, "
-                + "i.item_name, b.booking_ID, s.staff_username "
+                + "i.item_name, b.booking_ID, c.cust_username AS customer_username "
                 + "FROM COLLECTION_RECORD cr "
                 + "LEFT JOIN item i ON cr.item_id = i.item_id "
                 + "LEFT JOIN booking b ON cr.book_id = b.booking_ID "
                 + "LEFT JOIN staff s ON cr.staff_id = s.staff_id "
-                + "WHERE b.cust_id = ? "
-                + "ORDER BY CR.COLLECT_ID DESC ";
+                + "LEFT JOIN customer c ON b.cust_id = c.cust_id "
+                + "WHERE c.cust_id = ? "
+                + "ORDER BY cr.collect_id DESC";
 
         ps = conn.prepareStatement(sql);
         ps.setInt(1, custID);
@@ -42,9 +43,8 @@
                     rs.getString("reward_status"),
                     rs.getInt("book_id"),
                     rs.getInt("item_id"),
-                    rs.getInt("staff_id"),
-                    rs.getString("staff_username"),
-                    rs.getString("item_name")
+                    rs.getString("item_name"),
+                    rs.getString("customer_username")
             );
             records.add(record);
         }
@@ -145,7 +145,6 @@
                                         <th>Reward Status</th>
                                         <th>Book ID</th>
                                         <th>Item</th>
-                                        <th>Staff</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -168,7 +167,6 @@
                                         </td>
                                         <td class="text-center py-3"><%= record.getBookId()%></td>
                                         <td class="text-center py-3"><%= record.getItemName()%></td>
-                                        <td class="text-center py-3"><%= record.getStaffName()%></td>
                                     </tr>
                                     <% }
                                         }%>

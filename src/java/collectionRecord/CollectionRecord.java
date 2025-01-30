@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin;
+package collectionRecord;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -22,13 +22,12 @@ public class CollectionRecord {
     private String rewardStatus;
     private int bookId;
     private int itemId;
-    private int staffId;
-    private String staffName;
     private String itemName;
+    private String customerUsername;
 
-    public CollectionRecord(int collectId, BigDecimal collectWeight, BigDecimal totalAmount,
-            Date collectDate, String collectTime, String rewardStatus,
-            int bookId, int itemId, int staffId, String staffName, String itemName) {
+    public CollectionRecord(int collectId, BigDecimal collectWeight, BigDecimal totalAmount, Date collectDate,
+            String collectTime, String rewardStatus, int bookId, int itemId,
+            String itemName, String customerUsername) {
         this.collectId = collectId;
         this.collectWeight = collectWeight;
         this.totalAmount = totalAmount;
@@ -37,9 +36,8 @@ public class CollectionRecord {
         this.rewardStatus = rewardStatus;
         this.bookId = bookId;
         this.itemId = itemId;
-        this.staffId = staffId;
-        this.staffName = staffName;
         this.itemName = itemName;
+        this.customerUsername = customerUsername;  // Set customer username
     }
 
     // Getters and setters
@@ -75,16 +73,8 @@ public class CollectionRecord {
         return itemId;
     }
 
-    public int getStaffId() {
-        return staffId;
-    }
-
     public String getItemName() {
         return itemName;
-    }
-
-    public String getStaffName() {
-        return staffName;
     }
 
     public void setCollectId(int collectId) {
@@ -119,16 +109,12 @@ public class CollectionRecord {
         this.itemId = itemId;
     }
 
-    public void setStaffId(int staffId) {
-        this.staffId = staffId;
-    }
-
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
+    public String getCustomerUsername() {
+        return customerUsername;
     }
-    
+
 }

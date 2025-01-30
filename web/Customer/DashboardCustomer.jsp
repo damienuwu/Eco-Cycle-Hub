@@ -1,18 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="items.item" %>
+<%@ page import="items.itemDAO" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="user.Session" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<jsp:useBean id="itemDAO" class="items.itemDAO"/>
 
 <%
-    session = request.getSession(false);
+    // No need to declare session here as it's already available as an implicit object
     if (session == null || !Session.isValidCustomerSession(session, response)) {
+        response.sendRedirect("login.jsp");
         return;
     }
     int custID = Session.getCustID(session);
 
     String address = "", houseNo = "", streetName = "", city = "", state = "";
     int addressID = 0, postcode = 0;
+    double totalAmountSum = 0.0;
+    double totalCollectWeight = 0.0;
 
     // Fetch addresses for the customer
     List<String> addressList = new ArrayList<String>();
@@ -20,10 +31,13 @@
 
     try {
         Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/GreenTech", "app", "app");
+
+        // Fetch addresses
         String sql = "SELECT * FROM address WHERE cust_id = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, custID);
         ResultSet rs = ps.executeQuery();
+
         while (rs.next()) {
             addressID = rs.getInt("address_id");
             houseNo = rs.getString("house_no");
@@ -67,10 +81,82 @@
                 addressListID.add(addressID);
             }
         }
+
+        rs.close();
+        ps.close();
+
+        // Fetch collection records
+        String sqlItems = "SELECT item_name, item_pict FROM item";
+        PreparedStatement psItems = conn.prepareStatement(sqlItems);
+        ResultSet rsItems = psItems.executeQuery();
+
+        List<item> itemList = new ArrayList<item>();
+        while (rsItems.next()) {
+            item item = new item();
+            item.setItemName(rsItems.getString("item_name"));
+            item.setItemPict(rsItems.getString("item_pict"));
+            itemList.add(item);
+        }
+        rsItems.close();
+        psItems.close();
+
+        // Fetch total rewards (RM)
+        String sqlTotalRewards = "SELECT SUM(collection_record.total_amount) AS total_reward "
+                + "FROM collection_record "
+                + "JOIN booking ON collection_record.book_id = booking.booking_id "
+                + "WHERE booking.cust_id = ? "
+                + "AND collection_record.reward_status = 'Success'";
+        PreparedStatement psTotalRewards = conn.prepareStatement(sqlTotalRewards);
+        psTotalRewards.setInt(1, custID);
+        ResultSet rsTotalRewards = psTotalRewards.executeQuery();
+
+        while (rsTotalRewards.next()) {
+            totalAmountSum += rsTotalRewards.getDouble("total_reward");
+        }
+        rsTotalRewards.close();
+        psTotalRewards.close();
+
+        // Fetch total weight for each item
+        String sqlTotalWeight = "SELECT item.item_name, SUM(collection_record.collect_weight) AS total_weight "
+                + "FROM collection_record "
+                + "JOIN booking ON collection_record.book_id = booking.booking_id "
+                + "JOIN item ON collection_record.item_id = item.item_id "
+                + "WHERE booking.cust_id = ? "
+                + "AND collection_record.reward_status = 'Success' "
+                + "GROUP BY item.item_name";
+
+        PreparedStatement psTotalWeight = conn.prepareStatement(sqlTotalWeight);
+        psTotalWeight.setInt(1, custID);
+        ResultSet rsTotalWeight = psTotalWeight.executeQuery();
+        List<Double> itemWeightList = new ArrayList<Double>();
+
+        while (rsTotalWeight.next()) {
+            String itemName = rsTotalWeight.getString("item_name");
+            double totalWeight = rsTotalWeight.getDouble("total_weight");
+
+            // Find the corresponding item in the itemList and set the weight
+            for (item i : itemList) {
+                if (i.getItemName().equals(itemName)) {
+                    i.setTotalWeight(totalWeight);
+                    break;
+                }
+            }
+            itemWeightList.add(totalWeight);
+
+        }
+
+        rsTotalWeight.close();
+        psTotalWeight.close();
+
+        // Set attributes to request
+        request.setAttribute("itemList", itemList);
+        request.setAttribute("totalAmountSum", totalAmountSum);
+        request.setAttribute("itemWeightMap", itemWeightList);
     } catch (SQLException e) {
         e.printStackTrace();
     }
 %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -93,45 +179,48 @@
 
     </head>
     <body>
-        <div class="container-fluid d-flex p-0">
+        <div class="container-fluid d-flex p-0 flex-column">
             <nav id="sidebar"></nav>
+
             <main class="main flex-grow-1 bg-light">
                 <div id="topbar"></div>
-                <div class="container-fluid py-3">
+
+                <!-- Total Rewards Section -->
+                <div class="container-fluid py-3" id="total-rewards">
                     <h3 class="text-center">Dashboard</h3>
                     <div class="content d-flex flex-column align-items-center">
                         <div class="dashboard w-100 text-center">
                             <div class="top-item item text-white rounded p-3 shadow-sm">
                                 <p>Total Rewards</p>
-                                <h2>17.50</h2>
-                                <p>RM</p>
+                                <h2>RM <fmt:formatNumber value="${totalAmountSum}" maxFractionDigits="2" minFractionDigits="2" /></h2>
                             </div>
-                            <div class="bottom-row row justify-content-center mt-4">
-                                <div class="col-12 col-md-4 col-lg-3 mb-3">
-                                    <div class="item bg-white rounded p-3 shadow-sm">
-                                        <p>Bottle</p>
-                                        <h2>0</h2>
-                                        <p>KG</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4 col-lg-3 mb-3">
-                                    <div class="item bg-white rounded p-3 shadow-sm">
-                                        <p>Aluminium Can</p>
-                                        <h2>0</h2>
-                                        <p>KG</p>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4 col-lg-3 mb-3">
-                                    <div class="item bg-white rounded p-3 shadow-sm">
-                                        <p>Used Cooking Oil</p>
-                                        <h2>0</h2>
-                                        <p>KG</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="recycle-btn btn btn-success mt-4 px-5 py-2" onclick="openBookingForm()">Recycle More</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Item Display Section -->
+                <div class="bottom-row row justify-content-start mt-4" id="item-container">
+                    <c:forEach var="item" items="${itemList}">
+                        <div class="col-12 col-md-4 col-lg-3 mb-3">
+                            <div class="item bg-white rounded p-3 shadow-sm">
+                                <div class="item-card text-center">
+                                    <!-- Bootstrap Classes for Image Styling -->
+                                    <img src="${item.itemPict}" alt="${item.itemName}" 
+                                         class="img-fluid rounded mb-2" 
+                                         style="max-width: 100%; height: 150px; object-fit: cover;">
+
+                                    <h3 class="h5">${item.itemName}</h3>
+                                    <p>Total Weight: 
+                                        <fmt:formatNumber value="${item.totalWeight}" maxFractionDigits="2" minFractionDigits="2" /> KG
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="recycle-btn btn btn-success px-5 py-2" onclick="openBookingForm()">Recycle More</button>
                 </div>
             </main>
         </div>
@@ -148,8 +237,8 @@
                         <form id="bookingForm" action="../SubmitBookingServlet" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="pickupAddress" class="form-label">Pick Up Address</label>
-                                <textarea name="pickupAddress" id="pickupAddress" class="form-control" readonly style="text-align: left;"><%= addressList.isEmpty() ? "No address found." : addressList.get(0) %></textarea>
-                                <input type="hidden" name="address_id" id="address_id" value="<%= addressList.isEmpty() ? 0 : addressListID.get(0) %>">
+                                <textarea name="pickupAddress" id="pickupAddress" class="form-control" readonly style="text-align: left;"><%= addressList.isEmpty() ? "No address found." : addressList.get(0)%></textarea>
+                                <input type="hidden" name="address_id" id="address_id" value="<%= addressList.isEmpty() ? 0 : addressListID.get(0)%>">
                                 <button type="button" class="btn btn-outline-secondary mt-2" onclick="openChangeAddressModal()">Change</button>
                             </div>
 

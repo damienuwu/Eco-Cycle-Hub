@@ -42,11 +42,11 @@
     </servlet>
     <servlet>
         <servlet-name>AddCollectionServlet</servlet-name>
-        <servlet-class>admin.AddCollectionServlet</servlet-class>
+        <servlet-class>collectionRecord.AddCollectionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteCollectionServlet</servlet-name>
-        <servlet-class>admin.DeleteCollectionServlet</servlet-class>
+        <servlet-class>collectionRecord.DeleteCollectionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateRewardStatusServlet</servlet-name>

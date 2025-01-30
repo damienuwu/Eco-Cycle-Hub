@@ -1,4 +1,4 @@
-package admin;
+package collectionRecord;
 
 import java.io.IOException;
 import java.sql.Connection;

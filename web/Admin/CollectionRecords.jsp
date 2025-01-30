@@ -1,5 +1,5 @@
 <%@ page import="user.Session" %>
-<%@ page import="admin.CollectionRecord" %>
+<%@ page import="collectionRecord.CollectionRecord" %>
 <%@ page import="java.sql.*, java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -11,7 +11,7 @@
     int staffID = Session.getStaffID(session);
     // Maps and lists to hold data
     Map<Integer, String> items = new HashMap<Integer, String>();
-    List<String> books = new ArrayList<String>();
+    Map<String, String> books = new HashMap<String, String>();
     List<CollectionRecord> records = new ArrayList<CollectionRecord>();
     Map<Integer, String> collectionItems = new HashMap<Integer, String>();
     List<String> collectionBooks = new ArrayList<String>();
@@ -38,28 +38,43 @@
         rs.close(); // Close ResultSet after use
 
         // --- Retrieve bookings for form ---
-        String bookingSql = "SELECT booking_id FROM booking ORDER BY booking_id ASC";
+        String bookingSql = "SELECT b.booking_id, c.cust_username "
+                + "FROM booking b "
+                + "LEFT JOIN customer c ON b.cust_id = c.cust_id "
+                + "ORDER BY b.booking_id ASC";
         ps = conn.prepareStatement(bookingSql);
         rs = ps.executeQuery();
 
         while (rs.next()) {
             String bookingId = rs.getString("booking_id");
+            String customerUsername = rs.getString("cust_username");
+
             if (bookingId != null && !bookingId.isEmpty()) {
-                books.add(bookingId);
+                books.put(bookingId, customerUsername);
             }
         }
-        rs.close(); // Close ResultSet after use
-        ps.close(); // Close PreparedStatement after use
+        rs.close();
+        ps.close();
+
+        List<Map.Entry<String, String>> sortedBooks = new ArrayList<Map.Entry<String, String>>(books.entrySet());
+
+        Collections.sort(sortedBooks, new Comparator<Map.Entry<String, String>>() {
+            public int compare(Map.Entry<String, String> entry1, Map.Entry<String, String> entry2) {
+                // Compare based on booking_id (key)
+                return entry1.getKey().compareTo(entry2.getKey());
+            }
+        });
 
         // --- Retrieve collection records to display table ---
         String collectionSql = "SELECT cr.collect_id, cr.collect_weight, cr.total_amount, cr.collect_date, cr.collect_time, "
                 + "cr.reward_status, cr.book_id, cr.item_id, cr.staff_id, "
-                + "i.item_name, b.booking_ID, s.staff_username "
+                + "i.item_name, b.booking_ID, c.cust_username AS customer_username " // Join customer table to fetch the customer username
                 + "FROM COLLECTION_RECORD cr "
                 + "LEFT JOIN item i ON cr.item_id = i.item_id "
                 + "LEFT JOIN booking b ON cr.book_id = b.booking_ID "
                 + "LEFT JOIN staff s ON cr.staff_id = s.staff_id "
-                + "ORDER BY CR.COLLECT_ID DESC ";
+                + "LEFT JOIN customer c ON b.cust_id = c.cust_id " // Join the customer table to fetch the customer username
+                + "ORDER BY cr.collect_id DESC ";
 
         ps = conn.prepareStatement(collectionSql);
         rs = ps.executeQuery();
@@ -75,9 +90,8 @@
                     rs.getString("reward_status"),
                     rs.getInt("book_id"),
                     rs.getInt("item_id"),
-                    rs.getInt("staff_id"),
                     rs.getString("item_name"),
-                    rs.getString("staff_username")
+                    rs.getString("customer_username")
             );
             records.add(record);
 
@@ -187,7 +201,7 @@
                                     <th>Reward Status</th>
                                     <th>Book ID</th>
                                     <th>Item</th>
-                                    <th>Staff</th>
+                                    <th>Customer</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -210,12 +224,12 @@
                                             <option value="Success" class="success" <%= record.getRewardStatus().equals("Success") ? "selected" : ""%>>Success</option>
                                         </select>
                                     </td>
-                                    
-                                    
+
+
 
                                     <td><%= record.getBookId()%></td>
-                                    <td><%= record.getStaffName()%></td>
                                     <td><%= record.getItemName()%></td>
+                                    <td><%= record.getCustomerUsername()%></td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" onclick="deleteRecord(<%= record.getCollectId()%>)"><i class="bx bx-trash"></i> Delete</button>
                                     </td>
@@ -272,11 +286,18 @@
                                         <div class="mb-3">
                                             <label for="bookId" class="form-label">Select Booking ID</label>
                                             <select class="form-select" id="bookId" name="bookId" required>
-                                                <% for (String book : books) {%>
-                                                <option value="<%= book%>"><%= book%></option>
-                                                <% }%>
+                                                <%
+                                                    for (Map.Entry<String, String> entry : books.entrySet()) {
+                                                %>
+                                                <option value="<%= entry.getKey()%>">
+                                                    Booking Id: <%= entry.getKey()%> (Username: <%= entry.getValue()%>)
+                                                </option>
+                                                <%
+                                                    }
+                                                %>
                                             </select>
                                         </div>
+
                                         <!-- Hidden staff ID field -->
                                         <input type="hidden" name="staffId" value="<%= staffID%>">
                                         <div class="text-center">
