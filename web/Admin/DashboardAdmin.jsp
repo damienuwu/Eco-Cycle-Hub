@@ -146,80 +146,69 @@
                     </div>
                 </div>
 
-                <!-- Details Section -->
-                <div class="details">
-                    <div class="row mb-4">
-                        <!-- Recent Bookings Section -->
-                        <div class="col-md-8 mb-4">
-                            <div class="recentOrders mb-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h2>Recent Bookings</h2>
-                                    <a href="VehicleBooking.jsp" class="btn btn-primary">View All</a>
+                <!-- Tables Section -->
+                <div class="row g-4">
+                    <!-- Recent Bookings Table -->
+                    <div class="col-12 col-xl-8">
+                        <div class="card bg-white rounded-3 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="card-title mb-0">Recent Bookings</h5>
+                                    <a href="VehicleBooking.jsp" class="btn btn-primary btn-sm">View All</a>
                                 </div>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Book ID</th>
-                                            <th>Pickup Date</th>
-                                            <th>Pickup Time</th>
-                                            <th>Book Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            for (Map<String, String> booking : recentBookings) {
-                                        %>
-                                        <tr>
-                                            <td><%= booking.get("booking_ID")%></td>
-                                            <td><%= booking.get("pickup_date")%></td>
-                                            <td><%= booking.get("pickup_time")%></td>
-                                            <td><%= booking.get("book_status")%></td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr class="bg-success text-white">
+                                                <th>Book ID</th>
+                                                <th>Pickup Date</th>
+                                                <th>Pickup Time</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (Map<String, String> booking : recentBookings) {%>
+                                            <tr>
+                                                <td><%= booking.get("booking_ID")%></td>
+                                                <td><%= booking.get("pickup_date")%></td>
+                                                <td><%= booking.get("pickup_time")%></td>
+                                                <td><%= booking.get("book_status")%></td>
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Recent Customers Section -->
-                        <div class="col-md-8 mb-4">
-                            <div class="recentCustomers">
-                                <h2>Recent Customers</h2>
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <%
-                                            // Loop through the customers list and display each customer
-                                            for (Map<String, String> customer : customers) {
-                                                String custUsername = customer.get("cust_Username");
-                                                String profilePic = customer.get("profile_picture");
-                                                // Assuming you have customer images saved and associated with customer_id
-                                                String imagePath = profilePic;
-                                                System.out.println(imagePath);// You can adjust this if you have a different way of storing images.
-                                        %>
-                                        <tr>
-                                            <td width="60">
-                                                <div class="imgBx">
-                                                    <%
-                                                        if (imagePath == null || imagePath.isEmpty()) {
-                                                            imagePath = "../uploads/default.png";  // Set to default image path if no profile image
-                                                        } else {
-                                                            imagePath = ".." + imagePath;  // Adjust image path if profile picture exists
-                                                        }
-                                                    %>
-                                                    <img src="<%= imagePath%>" alt="Customer Image">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h5><%= custUsername%> <br></h5>
-                                            </td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                    <!-- Recent Customers Table -->
+                    <div class="col-12 col-xl-4">
+                        <div class="card bg-white rounded-3 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Recent Customers</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <% for (Map<String, String> customer : customers) {
+                                                    String custUsername = customer.get("cust_Username");
+                                                    String profilePic = customer.get("profile_picture");
+                                                    String imagePath = (profilePic == null || profilePic.isEmpty()) ? "../uploads/default.png" : ".." + profilePic;
+                                            %>
+                                            <tr>
+                                                <td width="60">
+                                                    <div class="imgBx">
+                                                        <img src="<%= imagePath%>" class="rounded-circle" width="50" height="50" alt="Customer Image">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0"><%= custUsername%></h6>
+                                                </td>
+                                            </tr>
+                                            <% }%>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
