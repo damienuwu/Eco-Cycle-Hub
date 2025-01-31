@@ -10,13 +10,15 @@ Follow these steps to create a database for this project:
 
 1. **Navigate to the Project**  
    - Open your project directory.  
-   - Locate and search for the `source package` package.  
+   - Locate and search for the `source package`.  
 
 2. **Access the User Package**  
-   - Inside the `source package` package, find and open the `user` package.  
+   - Inside the `source package`, find and open the `user` package.  
 
 3. **Run the Table Creation File**  
-   - Execute the `TableCreation.java` file.  
+   - Execute the `TableCreation.java` file.
+   
+4. **Done**
 
 ### Completion
 
