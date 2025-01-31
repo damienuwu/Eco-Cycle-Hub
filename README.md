@@ -12,7 +12,7 @@ Follow these steps to create a database for this project:
    - Open a terminal or command prompt.  
    - Run the following command to clone the project from GitHub:  
      ```sh
-     git clone <repository-url>
+     git clone [<repository-url>](https://github.com/damienuwu/Eco-Cycle-Hub.git)
      ```
    - Navigate into the project directory:  
      ```sh
